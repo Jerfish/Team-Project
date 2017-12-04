@@ -1,0 +1,112 @@
+<html>
+<head>
+    <script>
+        
+ function openVertTab(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, vertTab;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="vertTab" and remove the class "active"
+    vertTab = document.getElementsByClassName("vertTab");
+    for (i = 0; i < vertTab.length; i++) {
+        vertTab[i].className = vertTab[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "inline";
+    evt.currentTarget.className += " active";
+}
+    
+    </script>
+    <style>
+        
+        #divider {
+            position: relative;
+            height:5%;
+            display: block;
+        }
+        
+div.vertMenu {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 20%;
+    height: 300px;
+}
+
+/* Style the buttons inside the tab */
+div.vertMenu button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+div.vertMenu button:hover {
+    background-color: #ddd;
+}
+
+div.vertMenu button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 300px;
+    display:none;
+}
+        .logo {
+            position:relative;
+            width: 10%;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <img src='makeItAllLogo.png' alt='Make It All' id='logo'>
+    <div class='everything'>
+<div class="vertMenu">
+  <button class="vertTab" onclick="openVertTab(event, 'newProblem')">New Problem</button>
+  <button class="vertTab" onclick="openVertTab(event, 'viewProblems')">View Problems</button>
+    <span class='divider'></span>
+  <button class="vertTab" onclick="openVertTab(event, 'specialists')">Specialists</button>
+</div>
+
+
+<div id="newProblem" class="tabcontent">
+  
+  
+</div>
+
+<div id="viewProblems" class="tabcontent">
+  <h3>Paris</h3>
+  <p>Paris is the capital of France.</p> 
+</div>
+
+<div id="specialists" class="tabcontent">
+  <h3>Tokyo</h3>
+  <p>Tokyo is the capital of Japan.</p>
+</div>
+
+</body>
+
+</html>
