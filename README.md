@@ -1,6 +1,6 @@
 # Team-Project
 ### Introduction
-
+Our Team Project is to create a helpdesk system for Make-It-All.
 
 ### Team 11
 * **Daniel Finch**, Project Manager
