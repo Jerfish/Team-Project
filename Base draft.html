@@ -2,7 +2,7 @@
     <head>
         <script>
 
-            function openVertTab(evt, cityName) {
+            function openVertTab(evt, tabName) {
                 // Declare all variables
                 var i, tabcontent, vertTab;
 
@@ -19,7 +19,7 @@
                 }
 
                 // Show the current tab, and add an "active" class to the link that opened the tab
-                document.getElementById(cityName).style.display = "inline";
+                document.getElementById(tabName).style.display = "inline";
                 evt.currentTarget.className += " active";
             }
 
@@ -95,18 +95,37 @@
                 <span class="vertTab" onclick="openVertTab(event, 'hardSoftWareList')">Hardware/Software List</span>
                 <span class="vertTab" onclick="openVertTab(event, 'analytics')">Analytics</span>
             </div>
+            
             <div id="home" class="tabcontent">
             <h3>Home</h3>
                 Welcome to The Heldesk Prototype.
             </div>
+            
             <div id="newProblem" class="tabcontent">
-
+                <h3>New Problem</h3>
+                New Problem form here.
             </div>
 
             <div id="problemsList" class="tabcontent">
+                <h3>Problems List</h3>
+                Problems list table here.
             </div>
 
             <div id="specialistsList" class="tabcontent">
+                <h3>Specialists List</h3>
+                Specialists table here.
+            </div>
+            
+            <div id="hardSoftWareList" class="tabcontent">
+                <h3>Hardware List</h3>
+                Hardware Table here.
+                <h3>Software List</h3>
+                Software Table here.
+            </div>
+            
+            <div id="analytics" class="tabcontent">
+                <h3>Analytics</h3>
+                Potentially some analytics here.
             </div>
         </div>
         <script>openVertTab(event, 'home');</script>
