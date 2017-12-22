@@ -2,6 +2,8 @@
     <head>
         <script>
 
+
+
             function openVertTab(evt, tabName) {
                 // Declare all variables
                 var i, tabcontent, vertTab;
@@ -23,8 +25,52 @@
                 evt.currentTarget.className += " active";
             }
 
+            function openNewProbTab(evt, tabName) {
+                // Declare all variables
+                var i, tabcontent, newProbTab;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("NewProbTabContent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="vertTab" and remove the class "active"
+                newProbTab = document.getElementsByClassName("newProbTab");
+                for (i = 0; i < newProbTab.length; i++) {
+                    newProbTab[i].className = newProbTab[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the link that opened the tab
+                document.getElementById(tabName).style.display = "inline";
+                evt.currentTarget.className += " active";
+            }
+
         </script>
         <style>
+
+            div.newProbMenu {
+                float: left;
+                border: 1px solid black;
+                background-color: #f1f1f1;
+                width: 100%;
+                height: 10%;
+            }
+
+            div.newProbMenu span {
+                display: inline-block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 30%;
+                height: 35%;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            div.newProbMenu span:hover {
+                background-color: #ddd;
+            }
 
             #divider {
                 position: relative;
@@ -49,7 +95,7 @@
                 text-align: left;
                 cursor: pointer;
             }
-            
+
             div.vertMenu div {
                 display: block;
                 background-color: inherit;
@@ -95,15 +141,34 @@
                 <span class="vertTab" onclick="openVertTab(event, 'hardSoftWareList')">Hardware/Software List</span>
                 <span class="vertTab" onclick="openVertTab(event, 'analytics')">Analytics</span>
             </div>
-            
+
             <div id="home" class="tabcontent">
-            <h3>Home</h3>
+                <h3>Home</h3>
                 Welcome to The Heldesk Prototype.
             </div>
-            
             <div id="newProblem" class="tabcontent">
+                <div class="newProbMenu">
+                    <span class="newProbTab active" onclick="openNewProbTab(event, 'requiredInfo')">Required Information</span>
+                    <span class="newProbTab" onclick="openNewProbTab(event, 'additionalInfo')">Additional Information</span>
+                    <span class="newProbTab" onclick="openNewProbTab(event, 'descriptionLog')">Problem Description / Log</span>
+                </div>
                 <h3>New Problem</h3>
                 New Problem form here.
+                <div id="requiredInfo" class="newProbTabContent">
+                    Required Information form goes here.
+                    <p onclick="openNewProbTab(event, 'additionalInfo');"> Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="additionalInfo" class="newProbTabContent">
+                    Additional Information form goes here.
+                    <p onclick="openNewProbTab(event, 'descriptionLog');">Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="descriptionLog" class="newProbTabContent">
+                    Problem Description and Log area form goes here.
+                    <p onclick="alert('form submitted, hopefully.');">Submit button submits the form.</p>
+                </div>
+<script>openNewProbTab(event, 'requiredInfo');</script>
             </div>
 
             <div id="problemsList" class="tabcontent">
@@ -115,14 +180,14 @@
                 <h3>Specialists List</h3>
                 Specialists table here.
             </div>
-            
+
             <div id="hardSoftWareList" class="tabcontent">
                 <h3>Hardware List</h3>
                 Hardware Table here.
                 <h3>Software List</h3>
                 Software Table here.
             </div>
-            
+
             <div id="analytics" class="tabcontent">
                 <h3>Analytics</h3>
                 Potentially some analytics here.
