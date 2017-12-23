@@ -1,0 +1,201 @@
+<html>
+    <head>
+        <script>
+            //The tabs rely solely on the fact that in CSS, 'display:none;' hides the element. The javascript has been butchered and patched together from some w3schools bit I looked at a while ago. I'll go through in closer detail, but essentially, when you click an element, the js will go through all the divs in the 'tabcontent' class (specific to the tabs we're talking about - vertical menu or other (NewProbTab)) and make their display: none. It'll then go through the tab/buttons themselves and make them 'inactive' (not highlighted). Then it will take the tabName id passed from the onclick="" attribute and make that div not display:none, displaying it. It will then take the current target (ie. the button you pressed) and make it 'active', so if it's a button it will become highlighted. When I/Will start on the actual first draft, I'm aiming to code this process much better than the mess of code below.  
+            
+            function openVertTab(evt, tabName) {
+                // Declare all variables
+                var i, tabcontent, vertTab;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="vertTab" and remove the class "active"
+                vertTab = document.getElementsByClassName("vertTab");
+                for (i = 0; i < vertTab.length; i++) {
+                    vertTab[i].className = vertTab[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the link that opened the tab
+                document.getElementById(tabName).style.display = "inline";
+                evt.currentTarget.className += " active";
+            }
+
+            function openNewProbTab(evt, tabName) {
+                // Declare all variables
+                var i, tabcontent, newProbTab;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("NewProbTabContent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="vertTab" and remove the class "active"
+                newProbTab = document.getElementsByClassName("newProbTab");
+                for (i = 0; i < newProbTab.length; i++) {
+                    newProbTab[i].className = newProbTab[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the link that opened the tab
+                document.getElementById(tabName).style.display = "inline";
+                evt.currentTarget.className += " active";
+            }
+
+        </script>
+        <style>
+
+            div.newProbMenu {
+                float: left;
+                border: 1px solid black;
+                background-color: #f1f1f1;
+                width: 100%;
+                height: 10%;
+            }
+
+            div.newProbMenu span {
+                display: inline-block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 30%;
+                height: 35%;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            div.newProbMenu span:hover {
+                background-color: #ddd;
+            }
+
+            #divider {
+                position: relative;
+                height:5%;
+                display: block;
+            }
+
+            div.vertMenu {
+                float: left;
+                border: 1px solid black;
+                background-color: #f1f1f1;
+                width: 20%;
+                height: 100%;
+            }
+
+            div.vertMenu span {
+                display: block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 88%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            div.vertMenu div {
+                display: block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 88%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            div.vertMenu span:hover {
+                background-color: #ddd;
+            }
+
+            div.vertMenu span.active {
+                background-color: #ccc;
+            }
+
+            /* Style the tab content */
+            .tabcontent {
+                float: left;
+                padding: 0px 12px;
+                border: 1px solid black;
+                width: 78%;
+                border-left: none;
+                height: 100%;
+                display:none;
+            }
+
+        </style>
+    </head>
+
+
+
+    <body>
+        <div class='everything'>
+            <div class="vertMenu">
+                <div><img src="logo.png" alt="Make It All" style="padding:10px; max-width:95%; max-height:95%;"></div>
+                <span class="vertTab active" onclick="openVertTab(event, 'home')">Home</span>
+                <span class="vertTab" onclick="openVertTab(event, 'newProblem')">New Problem</span>
+                <span class="vertTab" onclick="openVertTab(event, 'problemsList')">Problems List</span>
+                <span class="vertTab" onclick="openVertTab(event, 'specialistsList')">Specialists List</span>
+                <span class="vertTab" onclick="openVertTab(event, 'hardSoftWareList')">Hardware/Software List</span>
+                <span class="vertTab" onclick="openVertTab(event, 'analytics')">Analytics</span>
+            </div>
+
+            <div id="home" class="tabcontent">
+                <h3>Home</h3>
+                Welcome to The Heldesk Prototype.
+            </div>
+            <div id="newProblem" class="tabcontent">
+                <div class="newProbMenu">
+                    <span class="newProbTab active" onclick="openNewProbTab(event, 'requiredInfo')">Required Information</span>
+                    <span class="newProbTab" onclick="openNewProbTab(event, 'additionalInfo')">Additional Information</span>
+                    <span class="newProbTab" onclick="openNewProbTab(event, 'descriptionLog')">Problem Description / Log</span>
+                </div>
+                <h3>New Problem</h3>
+                New Problem form here.
+                <div id="requiredInfo" class="newProbTabContent">
+                    Required Information form goes here.
+                    <p onclick="openNewProbTab(event, 'additionalInfo');"> Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="additionalInfo" class="newProbTabContent">
+                    Additional Information form goes here.
+                    <p onclick="openNewProbTab(event, 'descriptionLog');">Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="descriptionLog" class="newProbTabContent">
+                    Problem Description and Log area form goes here.
+                    <p onclick="alert('form submitted, hopefully.');">Submit button submits the form.</p>
+                </div>
+<script>openNewProbTab(event, 'requiredInfo');</script>
+            </div>
+
+            <div id="problemsList" class="tabcontent">
+                <h3 onclick="openNewProbTab(event, 'viewProb')">Problems List</h3>
+                Problems list table here.
+                
+                <div class="NewProbTabContent" id="viewProb" style="display:none;">Hello there.</div>
+                
+            </div>
+
+            <div id="specialistsList" class="tabcontent">
+                <h3>Specialists List</h3>
+                Specialists table here.
+            </div>
+
+            <div id="hardSoftWareList" class="tabcontent">
+                <h3>Hardware List</h3>
+                Hardware Table here.
+                <h3>Software List</h3>
+                Software Table here.
+            </div>
+
+            <div id="analytics" class="tabcontent">
+                <h3>Analytics</h3>
+                Potentially some analytics here.
+            </div>
+        </div>
+        <script>openVertTab(event, 'home');</script>
+    </body>
+
+</html>
