@@ -1,0 +1,180 @@
+<html>
+    <head>
+        <script>
+            
+            function openTab(event, tabName, type) {
+                var i, tabContent, mainTab;
+
+                if(type == "main"){
+                    tabContent = document.getElementsByClassName("tabContent");
+                    mainTab = document.getElementsByClassName("mainTab");
+                }else if(type =="sub"){
+                    tabContent = document.getElementsByClassName("subTabContent");
+                    mainTab = document.getElementsByClassName("subTab");
+                }
+
+                for(i = 0; i < tabContent.length; i++){
+                    tabContent[i].style.display = "none";
+                }
+
+                for(i = 0; i < mainTab.length; i++){
+                    mainTab[i].className = mainTab[i].className.replace(" active", "");
+                }
+
+                document.getElementById(tabName).style.display = "inline";
+                event.currentTarget.className += " active";
+            }
+        </script>
+        <style>
+
+            div.subMenu {
+                float: left;
+                border: 1px solid black;
+                background-color: #f1f1f1;
+                width: 100%;
+                height: 10%;
+            }
+
+            div.subMenu span {
+                display: inline-block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 30%;
+                height: 35%;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            div.subMenu span:hover {
+                background-color: #ddd;
+            }
+
+            #divider {
+                position: relative;
+                height:5%;
+                display: block;
+            }
+
+            div.mainMenu {
+                float: left;
+                border: 1px solid black;
+                background-color: #f1f1f1;
+                width: 20%;
+                height: 100%;
+            }
+
+            div.mainMenu span {
+                display: block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 88%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            div.mainMenu div {
+                display: block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 88%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            div.mainMenu span:hover {
+                background-color: #ddd;
+            }
+
+            div.mainMenu span.active {
+                background-color: #ccc;
+            }
+
+            /* Style the tab content */
+            .tabContent {
+                float: left;
+                padding: 0px 12px;
+                border: 1px solid black;
+                width: 78%;
+                border-left: none;
+                height: 100%;
+                display:none;
+            }
+
+        </style>
+    </head>
+
+
+
+    <body>
+        <div class='container'>
+            <div class="mainMenu">
+                <div><img src="logo.png" alt="Make It All" style="padding:10px; max-width:95%; max-height:95%;"></div>
+                <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
+                <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
+                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main')">Problems List</span>
+                <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main')">Specialists List</span>
+                <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main')">Hardware/Software List</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>
+            </div>
+
+            <div id="home" class="tabContent">
+                <h3>Home</h3>
+                Welcome to The Heldesk Prototype.
+            </div>
+            <div id="newProblem" class="tabContent">
+                <div class="subMenu">
+                    <span class="subTab active" onclick="openTab(event, 'requiredInfo', 'sub')">Required Information</span>
+                    <span class="subTab" onclick="openTab(event, 'additionalInfo', 'sub')">Additional Information</span>
+                    <span class="subTab" onclick="openTab(event, 'descriptionLog', 'sub')">Problem Description / Log</span>
+                </div>
+                <h3>New Problem</h3>
+                New Problem form here.
+                <div id="requiredInfo" class="subTabContent">
+                    Required Information form goes here.
+                    <p onclick="openTab(event, 'additionalInfo', 'sub');"> Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="additionalInfo" class="subTabContent">
+                    Additional Information form goes here.
+                    <p onclick="openTab(event, 'descriptionLog', 'sub');">Next button takes you to next form/tab</p>
+                </div>
+
+                <div id="descriptionLog" class="subTabContent">
+                    Problem Description and Log area form goes here.
+                    <p onclick="alert('form submitted, hopefully.');">Submit button submits the form.</p>
+                </div>
+                <script>openTab(event, 'requiredInfo', 'sub');</script>
+            </div>
+
+            <div id="problemsList" class="tabContent">
+                <h3 onclick="openTab(event, 'viewProb', 'sub')">Problems List</h3>
+                Problems list table here.
+
+                <div class="subTabContent" id="viewProb" style="display:none;">Hello there.</div>
+
+            </div>
+
+            <div id="specialistsList" class="tabContent">
+                <h3>Specialists List</h3>
+                Specialists table here.
+            </div>
+
+            <div id="hardSoftWareList" class="tabContent">
+                <h3>Hardware List</h3>
+                Hardware Table here.
+                <h3>Software List</h3>
+                Software Table here.
+            </div>
+
+            <div id="analytics" class="tabContent">
+                <h3>Analytics</h3>
+                Potentially some analytics here.
+            </div>
+        </div>
+        <script>openTab(event, 'home', 'main');</script>
+    </body>
+
+</html>
