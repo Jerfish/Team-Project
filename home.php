@@ -1,10 +1,9 @@
 <html>
     <head>
         <script>
-            
+
             function openTab(event, tabName, type) {
                 var i, tabContent, mainTab;
-
                 if(type == "main"){
                     tabContent = document.getElementsByClassName("tabContent");
                     mainTab = document.getElementsByClassName("mainTab");
@@ -12,20 +11,49 @@
                     tabContent = document.getElementsByClassName("subTabContent");
                     mainTab = document.getElementsByClassName("subTab");
                 }
-
                 for(i = 0; i < tabContent.length; i++){
                     tabContent[i].style.display = "none";
                 }
-
                 for(i = 0; i < mainTab.length; i++){
                     mainTab[i].className = mainTab[i].className.replace(" active", "");
                 }
-
                 document.getElementById(tabName).style.display = "inline";
                 event.currentTarget.className += " active";
             }
+
+            function logout() {
+                window.location.assign("index.html");
+            }
+
+            function userProfile() {
+
+            }
+
+            function dropDownMenu() {
+                document.getElementById("userDropDownMenu").classList.toggle("visible");
+            }
+
+            /* window.onclick = function(event) {
+				if (!event.target.matches('#userIcon')) {
+					var dropdowns = document.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+						var openDropdown = dropdowns[i];
+							if (openDropdown.classList.contains('show')) {
+							openDropdown.classList.remove('show');
+							}
+					}
+				}
+			} */
         </script>
         <style>
+            body {
+                width: 100%;
+            }
+
+            .container {
+                height: 93%;
+            }
 
             div.subMenu {
                 float: left;
@@ -34,7 +62,6 @@
                 width: 100%;
                 height: 10%;
             }
-
             div.subMenu span {
                 display: inline-block;
                 background-color: inherit;
@@ -45,73 +72,132 @@
                 text-align: center;
                 cursor: pointer;
             }
-
             div.subMenu span:hover {
                 background-color: #ddd;
             }
-
             #divider {
                 position: relative;
                 height:5%;
                 display: block;
             }
-
             div.mainMenu {
                 float: left;
                 border: 1px solid black;
                 background-color: #f1f1f1;
-                width: 20%;
+                width: 15%;
                 height: 100%;
             }
-
             div.mainMenu span {
                 display: block;
                 background-color: inherit;
                 color: black;
                 padding: 22px 16px;
-                width: 88%;
+                width: 84%;
                 text-align: left;
                 cursor: pointer;
             }
-
             div.mainMenu div {
                 display: block;
                 background-color: inherit;
                 color: black;
                 padding: 22px 16px;
-                width: 88%;
+                width: 80%;
                 text-align: left;
                 cursor: pointer;
             }
-
             div.mainMenu span:hover {
                 background-color: #ddd;
             }
-
             div.mainMenu span.active {
                 background-color: #ccc;
             }
-
             /* Style the tab content */
             .tabContent {
                 float: left;
                 padding: 0px 12px;
                 border: 1px solid black;
-                width: 78%;
+                width: 82%;
                 border-left: none;
                 height: 100%;
                 display:none;
             }
 
+            #headerBar {
+                border: 1px solid black;
+                height: 44px;
+                width: 98.9%;
+                background-color: #f1f1f1;
+            }
+
+            #headerBarLabel {
+                padding: 13px 1px 13px 1px;
+                width: 15%;
+                position: relative;
+                font-size: 100%;
+                border-right: 1px solid black;
+                text-align: center;
+            }
+
+            #mainImage {
+                cursor: default;
+                border-bottom: 1px solid black;
+                width: 84%;
+            }
+
+            #userIcon {
+                position: absolute;
+                height: 38px;
+                width: 38px;
+                cursor: pointer;
+            }
+
+            #userDropDownHolder {
+                position: absolute;
+                display: inline-block;
+                top: 13px;
+                left: 96%;
+            }
+
+            .userDropDownContent {
+                position: relative;
+                display: none;
+                top: 44px;
+                left: -70px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                background-color: #f9f9f9;
+                min-width: 120px;
+            }
+
+            div.dropDownOption:hover {
+                background-color: #f1f1f1;
+                cursor: pointer;
+            }
+
+            div.dropDownOption {
+                text-align: center;
+            }			
+
+            .visible {
+                display: block;
+            }
+
         </style>
     </head>
-
-
-
     <body>
+        <div id="headerBar">
+            <div id="headerBarLabel">Team 11 Helpdesk Prototype</div>
+            <div id="userDropDownHolder">
+                <img id="userIcon" src="userIcon.png" onclick="dropDownMenu()">
+                <div id="userDropDownMenu" class="userDropDownContent">
+                    <div>User: AliceSmith1</div>
+                    <div class="dropDownOption" onclick="userProfile()">Profile</div>
+                    <div class="dropDownOption" onclick="logout()">Logout</div>
+                </div>
+            </div>
+        </div>
         <div class='container'>
             <div class="mainMenu">
-                <div><img src="logo.png" alt="Make It All" style="padding:10px; max-width:95%; max-height:95%;"></div>
+                <div id="mainImage"><img src="logo.png" alt="Make It All" style="padding:10px; max-width:88%; max-height:88%;"></div>
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
                 <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main')">Problems List</span>
