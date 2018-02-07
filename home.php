@@ -184,6 +184,44 @@
         </style>
     </head>
     <body>
+        <?php
+        function getTable($type){
+            $servername = "localhost";
+            $username = 'root';
+            $password = 'vV7?m3Q4';
+            $dbname = "team11project";
+
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            } 
+            if($type == "Problem"){
+                $sql = "SELECT * FROM ProblemTest";
+            }else{
+                $sql = "SELECT * FROM problemtest";
+            }
+            $result = $conn->query($sql);
+            //$value = json_encode($result->fetch_all());
+
+            if ($result->num_rows > 0) {
+                // output data of each row
+
+                if($type == "Problem"){
+                    $str = "<table><tr><th>Problem ID</th><th>Date/Time Opened</th><th>ID of Caller</th><th>ID of Operator</th><th>Hardware/Software</th><th>Problem Type</th><th>Specialist ID</th><th>Date/Time Solved</th><th>Status</th></tr>";
+                    while($row = $result->fetch_assoc()) {
+                        $str .= "<tr><td>".$row["ProblemID"]."</td><td>".$row["DateOpened"].' '.$row["TimeOpened"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>".$row["HardwareSoftware"]."</td><td>".$row["ProblemTypeID"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["SolvedDate"].' '.$row["SolvedTime"]."</td><td>".$row["Status"]."</td></tr>";
+                    }
+                    $str .= '</table>';
+                    echo $str;
+                }
+            } else {
+                echo "0 results";
+            }
+            $conn->close();
+        }
+        ?>
         <div id="headerBar">
             <div id="headerBarLabel">Team 11 Helpdesk Prototype</div>
             <div id="userDropDownHolder">
@@ -238,7 +276,7 @@
             <div id="problemsList" class="tabContent">
                 <h3 onclick="openTab(event, 'viewProb', 'sub')">Problems List</h3>
                 Problems list table here.
-
+                <p><?php getTable("Problem"); ?></p>
                 <div class="subTabContent" id="viewProb" style="display:none;">Hello there.</div>
 
             </div>
