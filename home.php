@@ -187,8 +187,7 @@
         <?php
         function getTable($type){
             $servername = "localhost";
-            $username = 'root';
-            $password = 'vV7?m3Q4';
+            include "team11-mysql-connect.php"; //to provide $username,$password
             $dbname = "team11project";
 
             // Create connection
