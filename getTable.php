@@ -21,9 +21,11 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
+    
+    $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable('.$type.')" placeholder="Search..." style="width: 20%;">';
 
     if($type == "Problem"){
-        $str = "<table><tr><th>Problem ID</th><th>Date/Time Opened</th><th>ID of Caller</th><th>ID of Operator</th><th>Hardware/Software</th><th>Problem Type</th><th>Specialist ID</th><th>Date/Time Solved</th><th>Status</th></tr>";
+        $str .= "<table><tr><th>Problem ID</th><th>Date/Time Opened</th><th>ID of Caller</th><th>ID of Operator</th><th>Hardware/Software</th><th>Problem Type</th><th>Specialist ID</th><th>Date/Time Solved</th><th>Status</th></tr>";
         while($row = $result->fetch_assoc()) {
             $str .= "<tr><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
             
