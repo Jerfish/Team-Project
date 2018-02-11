@@ -17,7 +17,7 @@ This is our login page - once a suitable username and password is entered, it ch
 This is the main helpdesk page - it has many tabs, and different functionality for each.
 
 ##### Problems List
-This displays a table of all problems. When the tab is pressed, the <div>  is displayed, and a jQuery function is called. This function uses getTable.php to get a string containing the html of a table. This table is then 'printed' onto the div, displaying the problems. This works whenever you press the tab, which refreshes the table.
+This displays a table of all problems. When the tab is pressed, the \<div\>  is displayed, and a jQuery function is called. This function uses getTable.php to get a string containing the html of a table. This table is then 'printed' onto the div, displaying the problems. This works whenever you press the tab, which refreshes the table.
   
   
 #### getTable.php
