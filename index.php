@@ -14,6 +14,15 @@
     <head>
         <script>
             
+            //Gets a string containing a html table, which it then displays, depending on which tab is open (the parameter).
+            function getTable(type) {
+                $(document).ready(function() {
+                    $.get("getTable.php", {'type':type}, function(data) {
+                        document.getElementById("probTable").innerHTML = data;
+                    })
+                }(jQuery))
+            }
+            
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
 			function openTab(event, tabName, type) {
                 var i, tabContent, mainTab;
@@ -226,7 +235,7 @@
                 <div id="mainImage"><img src="logo.png" alt="Make It All" style="padding:10px; max-width:88%; max-height:88%;"></div>
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
                 <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
-                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main')">Problems List</span>
+                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('Problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main')">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main')">Hardware/Software List</span>
                 <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>
@@ -262,10 +271,8 @@
             </div>
 
             <div id="problemsList" class="tabContent">
-                <h3 onclick="openTab(event, 'viewProb', 'sub')">Problems List</h3>
-                Problems list table here.
-
-                <div class="subTabContent" id="viewProb" style="display:none;">Hello there.</div>
+                <h3>Problems List</h3>
+                <p id="probTable"></p>
 
             </div>
 
