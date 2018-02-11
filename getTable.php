@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
             }else if($row["SoftwareID"] == 0){
                 $str .= "Hardware";
             }else{
-                $str .= "Error"
+                $str .= "Error";
             }
                 
                $str .= "</td><td>".$row["ProblemType"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["DateTime Solved"]."</td><td>".$row["Status"]."</td></tr>";
