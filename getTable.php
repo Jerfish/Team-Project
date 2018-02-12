@@ -39,10 +39,10 @@ if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $str .= "<tr><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
 
-            if($row["HardwareID"] == 0){
-                $str .= "Software";
-            }else if($row["SoftwareID"] == 0){
+            if($row["Hardware ID"] != 0){
                 $str .= "Hardware";
+            }else if($row["Software ID"] != 0){
+                $str .= "Software";
             }else{
                 $str .= "Error";
             }
