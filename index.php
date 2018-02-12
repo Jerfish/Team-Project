@@ -20,18 +20,15 @@ else {}
                 filter = input.value.toUpperCase();
                 table = document.getElementById(i+'Table');
                 tr = table.getElementsByTagName("tr");
-                
-                for (i = 0; i < tr.length; i++) {
-                        
-                        
-                                tr[i].style.display = "none;";
-                            
-                        
-                    }
-                
-                for (j = 0; j < document.getElementById(i+'Table').rows[0].cells.length; j++){
+
+                for (x = 1; x < tr.length; x++) {
+                    tr[x].style.display = "none";
+                }
+                var str = i + 'Table';
+
+                for (j = 0; j < document.getElementById(str).rows[0].cells.length; j++){
                     // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
+                    for (i = 1; i < tr.length; i++) {
                         td = tr[i].getElementsByTagName("td")[j];
                         if (td) {
                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
