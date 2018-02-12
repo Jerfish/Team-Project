@@ -20,14 +20,23 @@ else {}
                 filter = input.value.toUpperCase();
                 table = document.getElementById(i+'Table');
                 tr = table.getElementsByTagName("tr");
-                // Loop through all table rows, and hide those who don't match the search query
+                
                 for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
+                        
+                        
+                                tr[i].style.display = "none;";
+                            
+                        
+                    }
+                
+                for (j = 0; j < document.getElementById(i+'Table').rows[0].cells.length; j++){
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[j];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            }
                         }
                     }
                 }
@@ -309,7 +318,7 @@ else {}
                 <div id="mainImage"><img src="logo.png" alt="Make It All" style="padding:10px; max-width:88%; max-height:88%;"></div>
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
                 <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
-                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('Problem');">Problems List</span>
+                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main')">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main')">Hardware/Software List</span>
                 <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>

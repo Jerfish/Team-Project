@@ -11,7 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-if($type == "Problem"){
+if($type == "problem"){
     $sql = "SELECT * FROM ProblemInfo";
 }else{
     echo "this will work later";
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
 
     $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable('.$type.')" placeholder="Search..." style="width: 20%;">';
 
-    if($type == "Problem"){
+    if($type == "problem"){
         $str .= "<table id='problemTable'><thead><tr>";
         $str .= "<th onclick='sortTable(0, \"problemTable\")'>Problem ID</th>";
         $str .= "<th onclick='sortTable(1, \"problemTable\")'>Date/Time Opened</th>";
