@@ -1,5 +1,4 @@
 <?php
-
 //My attempt at stopping people directly type the URL to access the page, doesn't work properly yet
 session_start();
 //include 'authentication.php';
@@ -13,19 +12,16 @@ else {}
 <html>
     <head>
         <script>
-
             function filterTable(i){
                 var input, filter, table, tr, td, i;
                 input = document.getElementById(i+'Search');
                 filter = input.value.toUpperCase();
                 table = document.getElementById(i+'Table');
                 tr = table.getElementsByTagName("tr");
-
                 for (x = 1; x < tr.length; x++) {
                     tr[x].style.display = "none";
                 }
                 var str = i + 'Table';
-
                 for (j = 0; j < document.getElementById(str).rows[0].cells.length; j++){
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 1; i < tr.length; i++) {
@@ -38,7 +34,6 @@ else {}
                     }
                 }
             }
-
             function sortTable(n, i) {
                 var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                 table = document.getElementById(i);
@@ -93,7 +88,6 @@ else {}
                     }
                 }
             }
-
             //Gets a string containing a html table, which it then displays, depending on which tab is open (the parameter).
             function getTable(type) {
                 $(document).ready(function() {
@@ -102,7 +96,6 @@ else {}
                     })
                 }(jQuery))
             }
-
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
             function openTab(event, tabName, type) {
                 var i, tabContent, mainTab;
@@ -122,22 +115,17 @@ else {}
                 document.getElementById(tabName).style.display = "inline";
                 event.currentTarget.className += " active";
             }
-
             //redirects the user to the login page when the logout option is selected in the user/profile drop down menu
             function logout() {
                 header("location: login.php");
             }
-
             //will, when completed, take the user to/allow them to edit username/password, will utilise the username input when logging in to determine which username/password to change
             function userProfile() {
-
             }
-
             //causes the, initially hidden, drop down menu to appear when the user icon is clicked, hides the menu when the icon is clicked again
             function dropDownMenu() {
                 document.getElementById("userDropDownMenu").classList.toggle("visible");
             }
-
             //should cause the drop down menu to close if anywhere on the page is clicked while it is open, didn't work on first try and haven't reattempted, will do soon
             /* window.onclick = function(event) {
 				if (!event.target.matches('#userIcon')) {
@@ -151,17 +139,14 @@ else {}
 					}
 				}
 			} */
-
         </script>
         <style>
             body {
                 width: 100%;
             }
-
             .container {
                 height: 93%;
             }
-
             div.subMenu {
                 float: left;
                 border: 1px solid black;
@@ -228,14 +213,12 @@ else {}
                 height: 100%;
                 display:none;
             }
-
             #headerBar {
                 border: 1px solid black;
                 height: 44px;
                 width: 98.9%;
                 background-color: #f1f1f1;
             }
-
             #headerBarLabel {
                 padding: 13px 1px 13px 1px;
                 width: 200px;
@@ -244,27 +227,23 @@ else {}
                 border-right: 1px solid black;
                 text-align: center;
             }
-
             #mainImage {
                 cursor: default;
                 border-bottom: 1px solid black;
                 width: 84%;
             }
-
             #userIcon {
                 position: absolute;
                 height: 38px;
                 width: 38px;
                 cursor: pointer;
             }
-
             #userDropDownHolder {
                 position: absolute;
                 display: inline-block;
                 top: 13px;
                 left: 96%;
             }
-
             .userDropDownContent {
                 position: relative;
                 display: none;
@@ -274,20 +253,16 @@ else {}
                 background-color: #f9f9f9;
                 min-width: 120px;
             }
-
             div.dropDownOption:hover {
                 background-color: #f1f1f1;
                 cursor: pointer;
             }
-
             div.dropDownOption {
                 text-align: center;
             }			
-
             .visible {
                 display: block;
             }
-
         </style>
     </head>
     <body>
@@ -369,8 +344,23 @@ else {}
             </div>
 
             <div id="analytics" class="tabContent">
+              <div class="subMenu">
+                  <span class="subTab active" onclick="openTab(event, 'software', 'sub')">Software Analytics</span>
+                  <span class="subTab" onclick="openTab(event, 'hardware', 'sub')">Hardware Analytics</span>
+                  <span class="subTab" onclick="openTab(event, 'specialists', 'sub')">Specialists Analytics</span>
+              </div>
                 <h3>Analytics</h3>
-                Potentially some analytics here.
+                <div id="software" class="subTabContent">
+                    Software Analytics
+                </div>
+
+                <div id="hardware" class="subTabContent">
+                  Hardware Analytics
+                </div>
+
+                <div id="specialists" class="subTabContent">
+                  Specialists Analytics
+                </div>
             </div>
         </div>
         <script>openTab(event, 'home', 'main');</script>
