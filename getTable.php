@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
         $str .= "<th onclick='sortTable(8, \"problemTable\")'>Status</th>";
         $str .= "</tr></thead><tbody>";
         while($row = $result->fetch_assoc()) {
-            $str .= "<tr onclick='viewProblem(".$row["ProblemID"].")><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
+            $str .= "<tr onclick='viewProblem(".$row["ProblemID"].")'><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
 
             if($row["Hardware ID"] != 0){
                 $str .= "Hardware";
