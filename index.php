@@ -118,14 +118,14 @@
 											var endDate;
 											for(var x =0;x<length;x++){
 												if(indexes.includes(obj(x).SoftwareID)){
-												startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))	
-												endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))
+												startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19));	
+												endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19));
 												average[x+1]=endDate-startDate;
 												}else{
 													indexes.push(obj(x).SoftwareID);
 													software[x+1] = obj(x).SoftwareName;
-													startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))	
-													endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))
+													startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19));	
+													endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19));
 													average[x+1]=endDate-startDate;
 												}
 											}
