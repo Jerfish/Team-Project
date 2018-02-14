@@ -300,27 +300,88 @@ else {}
                 <h3>Home</h3>
                 Welcome to The Heldesk Prototype.
             </div>
+		
             <div id="newProblem" class="tabContent">
                 <div class="subMenu">
                     <span class="subTab active" onclick="openTab(event, 'requiredInfo', 'sub')">Required Information</span>
                     <span class="subTab" onclick="openTab(event, 'additionalInfo', 'sub')">Additional Information</span>
                     <span class="subTab" onclick="openTab(event, 'descriptionLog', 'sub')">Problem Description / Log</span>
                 </div>
-                <h3>New Problem</h3>
-                New Problem form here.
                 <div id="requiredInfo" class="subTabContent">
-                    Required Information form goes here.
-                    <p onclick="openTab(event, 'additionalInfo', 'sub');"> Next button takes you to next form/tab</p>
+                    <form id="RequiredInfoForm">
+                        <div class="form-group">
+                            <label for="caller">Caller Name</label>
+                            <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs"><br>
+                            <label for="operator">Helpdesk Operator Name</label>
+                            <input type="text" class="form-control" id="operator" placeholder="Alice Smith"><br>
+                            <label for="time">Call Time/Date</label>
+                            <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50"><br>
+                            <label for="serial">Reason for Call</label>
+                            <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing"><br>
+                            <label for="hardware/software">Hardware/Software</label>
+                            <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()">
+                                <option>Hardware</option>
+								<option>Software</option>
+				            </select><br>
+                            <label for="hardware" id="hardwareLabel">Hardware Affected</label>
+                            <input type="text" class="form-control" id="hardware" placeholder="Kodak Printer"><br>
+                            <label for="software" id="softwareLabel">Software Affected</label>
+                            <input type="text" class="form-control" id="software" placeholder="Photoshop"><br>
+                            <label for="os">Operating System</label>
+                            <input type="text" class="form-control" id="os" placeholder="Windows/Mac OS/Linux"><br>
+                            <label for="type">Problem Type</label>
+                            <input type="text" class="form-control" id="type" placeholder="Please select most appropriate"><br>
+                            <div class="spacer"></div>
+                            <!--<input type="submit" id="firstPageSubmit" class="divButtons" />-->
+                        </div>
+                    </form>
+                    <input type='button' value='Next' onclick="openTab(event, 'additionalInfo', 'sub');">
                 </div>
 
                 <div id="additionalInfo" class="subTabContent">
-                    Additional Information form goes here.
-                    <p onclick="openTab(event, 'descriptionLog', 'sub');">Next button takes you to next form/tab</p>
+                    <form id="ExtraInfoForm">
+                        <div class="form-group">
+                            <label for="callerId">Caller ID</label>
+                            <input type="text" class="form-control" id="callerId" placeholder="p343231"><br>
+                            <label for="callerJob">Caller Job</label>
+                            <input type="text" class="form-control" id="callerJob" placeholder="Programmer"><br>
+                            <label for="callerDept">Caller Department</label>
+                            <input type="text" class="form-control" id="callerDept" placeholder="Sales"><br>
+                            <label for="CallerTelNum">Caller Telephone Number</label>
+                            <input type="text" class="form-control" id="callerTelNum" placeholder="07829473628"><br>
+                            <label for="hardwareSerial" id="hardwareSerialLabel">Hardware Serial Number</label>
+                            <input type="text" class="form-control" id="hardwareSerial" placeholder="C-40392-B"><br>
+                            <label for="softwareId" id="softwareIdLabel">Software ID</label>
+                            <input type="text" class="form-control" id="softwareId" placeholder="S1039"><br>
+                            <label for="softwareLicence" id="softwareLicenceLabel">Software Licenced?</label>
+                            <select class="form-control" id="softwareLicence" placeholder="Select an option">
+								<option>Yes</option>
+								<option>No</option>
+							</select><br>
+                            <label for="softwareSupport" id="softwareSupportLabel">Software Supported?</label>
+                            <select class="form-control" id="softwareSupport" placeholder="Select an option">
+								<option>Yes</option>
+								<option>No</option>				
+							</select><br>
+                            <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
+                            <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
+                            <label for="specialistName" id="specialistNameLabel">Assigned Specialist Name</label>
+                            <input type="text" class="form-control" id="specialistName" placeholder="John Peters"><br>
+                            <div class="spacer"></div>
+                        </div>
+                    </form>
+                    <input type='button' value='Next' onclick="openTab(event, 'descriptionLog', 'sub');">
                 </div>
 
                 <div id="descriptionLog" class="subTabContent">
-                    Problem Description and Log area form goes here.
-                    <p onclick="alert('form submitted, hopefully.');">Submit button submits the form.</p>
+                    <form id="ProblemDescForm">
+                        <div class="form-group">
+                            <label for="problemDesc" id="problemDescLabel">Problem Description</label>
+                            <textarea rows="5" cols="70" class="form-control" id="problemDesc" placeholder="Please enter a description of the problem"></textarea>
+                            <div class="spacer"></div>
+                        </div>
+                    </form>
+                    <input type='button' value='Submit' onclick="alert('do the database stuff');">
                 </div>
                 <script>openTab(event, 'requiredInfo', 'sub');</script>
             </div>
