@@ -39,6 +39,10 @@ AND
 STATUS =  'Solved'
 )
 GROUP BY Specialists.SpecialistID";
+}else if($type == "hardware"){
+    $sql = "SELECT * FROM Hardware WHERE HardwareID >=1";
+}else if($type == "software"){
+    $sql = "SELECT * FROM Software WHERE SoftwareID >=1";
 }else{
     echo "this will work later";
 }
@@ -89,6 +93,31 @@ if ($result->num_rows > 0) {
         $str .= "</tr></thead><tbody>";
         while($row = $result->fetch_assoc()) {
             $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>".$row["Completed Problems"]."</td><td>".$row["PersonnelID"]."</td></tr>";
+        }
+        $str .= '</tbody></table>';
+        echo $str;
+    } else if($type == "hardware"){
+        $str .= "<table id='hardwareTable'><thead><tr>";
+        $str .= "<th onclick='sortTable(0, \"hardwareTable\")'>Hardware ID</th>";
+        $str .= "<th onclick='sortTable(1, \"hardwareTable\")'>Hardware Type</th>";
+        $str .= "<th onclick='sortTable(2, \"hardwareTable\")'>Hardware Make</th>";
+        $str .= "<th onclick='sortTable(3, \"hardwareTable\")'>Serial No.</th>";
+        $str .= "<th onclick='sortTable(4, \"hardwareTable\")'>Personnel ID</th>";
+        $str .= "</tr></thead><tbody>";
+        while($row = $result->fetch_assoc()) {
+            $str .= "<tr><td>".$row["HardwareID"]."</td><td>".$row["HardwareType"]."</td><td>".$row["Make"]."</td><td>".$row["SerialNo"]."</td><td>"."</td><td>".$row["PersonnelID"]."</td></tr>";
+        }
+        $str .= '</tbody></table>';
+        echo $str;
+    } else if($type == "software"){
+        $str .= "<table id='softwareTable'><thead><tr>";
+        $str .= "<th onclick='sortTable(0, \"softwareTable\")'>Software ID</th>";
+        $str .= "<th onclick='sortTable(1, \"softwareTable\")'>Software Name</th>";
+        $str .= "<th onclick='sortTable(2, \"softwareTable\")'>Licenced?</th>";
+        $str .= "<th onclick='sortTable(3, \"softwareTable\")'>Supported?</th>";
+        $str .= "</tr></thead><tbody>";
+        while($row = $result->fetch_assoc()) {
+            $str .= "<tr><td>".$row["SoftwareID"]."</td><td>".$row["SoftwareName"]."</td><td>".$row["SoftwareLicenced"]."</td><td>".$row["SoftwareSupported"]."</td></tr>";
         }
         $str .= '</tbody></table>';
         echo $str;
