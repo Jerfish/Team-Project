@@ -104,15 +104,18 @@
                     })
                 }(jQuery))
             }
+            
+            function useSoftTable() {
+                $(document).ready(function() {
+                    $.get("getSoftTable.php", {'type':'GET'}, function(data) {
+                        alert(data);
+                    })
+                }(jQuery))
+            }
 
 						//gets an array of all data useful for software analytics
 						
-						function useSoftTable(){
-							ob_start();
-							include 'getSoftTable.php';
-							softwareArray[] = ob_get_clean();
-							echo softwareArray[];
-						}
+						
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
 			function openTab(event, tabName, type) {
                 var i, tabContent, mainTab;
