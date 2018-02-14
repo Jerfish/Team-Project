@@ -13,6 +13,32 @@ if ($conn->connect_error) {
 } 
 if($type == "problem"){
     $sql = "SELECT * FROM ProblemInfo";
+}else if($type == "specialist"){
+    $sql = "SELECT Specialists.SpecialistID, Specialists.Specialism, Personnel.Name, Personnel.TelNo, COUNT( e.ProblemID ) AS  'Current Problems', COUNT( f.ProblemID ) AS  'Completed Problems', Specialists.PersonnelID
+FROM Specialists
+INNER JOIN Personnel ON Specialists.PersonnelID = Personnel.PersonnelID
+INNER JOIN ProblemInfo e ON e.SpecialistID = Specialists.SpecialistID
+INNER JOIN ProblemInfo f ON f.SpecialistID = Specialists.SpecialistID
+WHERE e.ProblemID = any(
+
+SELECT ProblemID
+FROM ProblemInfo
+WHERE STATUS =  'Pending'
+)
+AND f.ProblemID = any(
+
+SELECT ProblemID
+FROM ProblemInfo
+WHERE (
+CallDateTime
+BETWEEN SUBDATE( NOW( ) , INTERVAL 1 
+MONTH ) 
+AND NOW( )
+)
+AND 
+STATUS =  'Solved'
+)
+GROUP BY Specialists.SpecialistID";
 }else{
     echo "this will work later";
 }
@@ -48,6 +74,21 @@ if ($result->num_rows > 0) {
             }
 
             $str .= "</td><td>".$row["ProblemType"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["DateTime Solved"]."</td><td>".$row["Status"]."</td></tr>";
+        }
+        $str .= '</tbody></table>';
+        echo $str;
+    } else if($type == "specialist"){
+        $str .= "<table id='specialistTable'><thead><tr>";
+        $str .= "<th onclick='sortTable(0, \"specialistTable\")'>Specialist ID</th>";
+        $str .= "<th onclick='sortTable(1, \"specialistTable\")'>Name</th>";
+        $str .= "<th onclick='sortTable(2, \"specialistTable\")'>Specialism</th>";
+        $str .= "<th onclick='sortTable(3, \"specialistTable\")'>Tel. No.</th>";
+        $str .= "<th onclick='sortTable(4, \"specialistTable\")'>No. Current Problems</th>";
+        $str .= "<th onclick='sortTable(5, \"specialistTable\")'>No. Completed Problems </br> (over last month)</th>";
+        $str .= "<th onclick='sortTable(6, \"specialistTable\")'>Personnel ID</th>";
+        $str .= "</tr></thead><tbody>";
+        while($row = $result->fetch_assoc()) {
+            $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>".$row["Completed Problems"]."</td><td>".$row["PersonnelID"]."</td></tr>";
         }
         $str .= '</tbody></table>';
         echo $str;
