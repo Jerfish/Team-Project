@@ -17,7 +17,93 @@
 ?>
 <html>
     <head>
+        <title>Make-it-all Helpdesk</title>
         <script>
+            
+            function filterTable(i){
+                var input, filter, table, tr, td, i;
+                input = document.getElementById(i+'Search');
+                filter = input.value.toUpperCase();
+                table = document.getElementById(i+'Table');
+                tr = table.getElementsByTagName("tr");
+                for (x = 1; x < tr.length; x++) {
+                    tr[x].style.display = "none";
+                }
+                var str = i + 'Table';
+                for (j = 0; j < document.getElementById(str).rows[0].cells.length; j++){
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 1; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[j];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            }
+                        }
+                    }
+                }
+            }
+            function sortTable(n, i) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById(i);
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+            no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.getElementsByTagName("tr");
+                    /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("td")[n];
+                        y = rows[i + 1].getElementsByTagName("td")[n];
+                        /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+            //Gets a string containing a html table, which it then displays, depending on which tab is open (the parameter).
+            function getTable(type) {
+                $(document).ready(function() {
+                    $.get("getTable.php", {'type':type}, function(data) {
+                        document.getElementById(type+"Div").innerHTML = data;
+                    })
+                }(jQuery))
+            }
             
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
 			function openTab(event, tabName, type) {
@@ -254,15 +340,15 @@
                 <div id="mainImage"><img src="logo.png" alt="Make It All" style="padding:10px; max-width:88%; max-height:88%;"></div>
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
                 <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
-                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main')">Problems List</span>
-                <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main')">Specialists List</span>
-                <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main')">Hardware/Software List</span>
+                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
+                <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
+                <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
                 <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>
             </div>
 
             <div id="home" class="tabContent">
                 <h3>Home</h3>
-                Welcome to The Heldesk Prototype.
+                Welcome to The Heldesk.
             </div>
             <div id="newProblem" class="tabContent">
                 <div class="subMenu">
@@ -270,48 +356,121 @@
                     <span class="subTab" onclick="openTab(event, 'additionalInfo', 'sub')">Additional Information</span>
                     <span class="subTab" onclick="openTab(event, 'descriptionLog', 'sub')">Problem Description / Log</span>
                 </div>
-                <h3>New Problem</h3>
-                New Problem form here.
                 <div id="requiredInfo" class="subTabContent">
-                    Required Information form goes here.
-                    <p onclick="openTab(event, 'additionalInfo', 'sub');"> Next button takes you to next form/tab</p>
+                    <form id="RequiredInfoForm">
+                        <div class="form-group">
+                            <label for="caller">Caller Name</label>
+                            <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs"><br>
+                            <label for="operator">Helpdesk Operator Name</label>
+                            <input type="text" class="form-control" id="operator" placeholder="Alice Smith"><br>
+                            <label for="time">Call Time/Date</label>
+                            <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50"><br>
+                            <label for="serial">Reason for Call</label>
+                            <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing"><br>
+                            <label for="hardware/software">Hardware/Software</label>
+                            <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()">
+                                <option>Hardware</option>
+								<option>Software</option>
+				            </select><br>
+                            <label for="hardware" id="hardwareLabel">Hardware Affected</label>
+                            <input type="text" class="form-control" id="hardware" placeholder="Kodak Printer"><br>
+                            <label for="software" id="softwareLabel">Software Affected</label>
+                            <input type="text" class="form-control" id="software" placeholder="Photoshop"><br>
+                            <label for="os">Operating System</label>
+                            <input type="text" class="form-control" id="os" placeholder="Windows/Mac OS/Linux"><br>
+                            <label for="type">Problem Type</label>
+                            <input type="text" class="form-control" id="type" placeholder="Please select most appropriate"><br>
+                            <div class="spacer"></div>
+                            <!--<input type="submit" id="firstPageSubmit" class="divButtons" />-->
+                        </div>
+                    </form>
+                    <input type='button' value='Next' onclick="openTab(event, 'additionalInfo', 'sub');">
                 </div>
 
                 <div id="additionalInfo" class="subTabContent">
-                    Additional Information form goes here.
-                    <p onclick="openTab(event, 'descriptionLog', 'sub');">Next button takes you to next form/tab</p>
+                    <form id="ExtraInfoForm">
+                        <div class="form-group">
+                            <label for="callerId">Caller ID</label>
+                            <input type="text" class="form-control" id="callerId" placeholder="p343231"><br>
+                            <label for="callerJob">Caller Job</label>
+                            <input type="text" class="form-control" id="callerJob" placeholder="Programmer"><br>
+                            <label for="callerDept">Caller Department</label>
+                            <input type="text" class="form-control" id="callerDept" placeholder="Sales"><br>
+                            <label for="CallerTelNum">Caller Telephone Number</label>
+                            <input type="text" class="form-control" id="callerTelNum" placeholder="07829473628"><br>
+                            <label for="hardwareSerial" id="hardwareSerialLabel">Hardware Serial Number</label>
+                            <input type="text" class="form-control" id="hardwareSerial" placeholder="C-40392-B"><br>
+                            <label for="softwareId" id="softwareIdLabel">Software ID</label>
+                            <input type="text" class="form-control" id="softwareId" placeholder="S1039"><br>
+                            <label for="softwareLicence" id="softwareLicenceLabel">Software Licenced?</label>
+                            <select class="form-control" id="softwareLicence" placeholder="Select an option">
+								<option>Yes</option>
+								<option>No</option>
+							</select><br>
+                            <label for="softwareSupport" id="softwareSupportLabel">Software Supported?</label>
+                            <select class="form-control" id="softwareSupport" placeholder="Select an option">
+								<option>Yes</option>
+								<option>No</option>				
+							</select><br>
+                            <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
+                            <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
+                            <label for="specialistName" id="specialistNameLabel">Assigned Specialist Name</label>
+                            <input type="text" class="form-control" id="specialistName" placeholder="John Peters"><br>
+                            <div class="spacer"></div>
+                        </div>
+                    </form>
+                    <input type='button' value='Next' onclick="openTab(event, 'descriptionLog', 'sub');">
                 </div>
 
                 <div id="descriptionLog" class="subTabContent">
-                    Problem Description and Log area form goes here.
-                    <p onclick="alert('form submitted, hopefully.');">Submit button submits the form.</p>
+                    <form id="ProblemDescForm">
+                        <div class="form-group">
+                            <label for="problemDesc" id="problemDescLabel">Problem Description</label>
+                            <textarea rows="5" cols="70" class="form-control" id="problemDesc" placeholder="Please enter a description of the problem"></textarea>
+                            <div class="spacer"></div>
+                        </div>
+                    </form>
+                    <input type='button' value='Submit' onclick="alert('do the database stuff');">
                 </div>
                 <script>openTab(event, 'requiredInfo', 'sub');</script>
             </div>
 
             <div id="problemsList" class="tabContent">
-                <h3 onclick="openTab(event, 'viewProb', 'sub')">Problems List</h3>
-                Problems list table here.
-
-                <div class="subTabContent" id="viewProb" style="display:none;">Hello there.</div>
+                 <h3>Problems List</h3>
+                <p id="problemDiv"></p>
 
             </div>
 
             <div id="specialistsList" class="tabContent">
                 <h3>Specialists List</h3>
-                Specialists table here.
+                <p id="specialistDiv"></p>
             </div>
 
             <div id="hardSoftWareList" class="tabContent">
                 <h3>Hardware List</h3>
-                Hardware Table here.
+                <p id="hardwareDiv"></p>
                 <h3>Software List</h3>
-                Software Table here.
+                <p id="softwareDiv"></p>
             </div>
 
             <div id="analytics" class="tabContent">
+                <div class="subMenu">
+                  <span class="subTab active" onclick="openTab(event, 'software', 'sub')">Software Analytics</span>
+                  <span class="subTab" onclick="openTab(event, 'hardware', 'sub')">Hardware Analytics</span>
+                  <span class="subTab" onclick="openTab(event, 'specialists', 'sub')">Specialists Analytics</span>
+              </div>
                 <h3>Analytics</h3>
-                Potentially some analytics here.
+                <div id="software" class="subTabContent">
+                    Software Analytics
+                </div>
+
+                <div id="hardware" class="subTabContent">
+                  Hardware Analytics
+                </div>
+
+                <div id="specialists" class="subTabContent">
+                  Specialists Analytics
+                </div>
             </div>
         </div>
         <script>openTab(event, 'home', 'main');</script>
