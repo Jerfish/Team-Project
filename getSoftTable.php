@@ -1,5 +1,4 @@
 <?php
-$type = $_REQUEST['type'];
 $servername = "localhost";
 include "team11-mysql-connect.php"; //to provide $username,$password
 $dbname = "team11project";
@@ -9,22 +8,20 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-if($type == "problem"){
-      $sql= "SELECT Software.SoftwareID, Software.SoftwareName, ProblemInfo.CallDateTime, ProblemInfo.DateTimeSolved FROM Software JOIN ProblemInfo ON Software.SoftwareID = ProblemInfo.SoftwareID WHERE ProblemInfo.DateTimeSolved != \"0000-00-00 00:00:00\" AND Software.SoftwareID >0 ORDER BY Software.SoftwareID" 
-}else{
-    echo "this will work later";
-}
+
+
+$sql= "SELECT Software.SoftwareID, Software.SoftwareName, ProblemInfo.CallDateTime, ProblemInfo.DateTimeSolved FROM Software JOIN ProblemInfo ON Software.SoftwareID = ProblemInfo.SoftwareID WHERE ProblemInfo.DateTimeSolved != \"0000-00-00 00:00:00\" AND Software.SoftwareID >0 ORDER BY Software.SoftwareID";
+
+
+
 $result = $conn->query($sql);
-//$value = json_encode($result->fetch_all());
-$num = mysql_num_rows($result);
-for ($i = 0; $i < $num; $i++)
-{
-    $softwareArray[] = mysql_fetch_assoc($result);
+
+if ($result->num_rows > 0) {
+
+while($row = $result->fetch_assoc()) {
+$value = json_encode($row);
+echo $value;
 }
-        echo $softwareArray[];
-    }
-} else {
-    echo "0 results";
-}
+}else{echo "bork";}
 $conn->close();
 ?>
