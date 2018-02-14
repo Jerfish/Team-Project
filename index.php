@@ -146,7 +146,7 @@
 											  var options = {'Average time taken to solve a software issue', 'width':400, 'height':300};
 						
 											  // Display the chart
-											  var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+											  var chart = new google.visualization.ColumnChart(document.getElementById('software'));
 											  chart.draw(data, options);
 											}      
                     })
