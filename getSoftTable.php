@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 if($type == "problem"){
-    $sql = "SELECT  `Software ID` ,  `ProblemType` ,  `CallDateTime` ,  `DateTime Solved` FROM  `ProblemInfo` HAVING  `Software ID` !=0";
+      $sql= "SELECT Software.SoftwareID, Software.SoftwareName, ProblemInfo.CallDateTime, ProblemInfo.DateTimeSolved FROM Software JOIN ProblemInfo ON Software.SoftwareID = ProblemInfo.SoftwareID WHERE ProblemInfo.DateTimeSolved != \"0000-00-00 00:00:00\" AND Software.SoftwareID >0 ORDER BY Software.SoftwareID" 
 }else{
     echo "this will work later";
 }
