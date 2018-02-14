@@ -52,7 +52,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
 
-    $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable('.$type.')" placeholder="Search..." style="width: 20%;">';
+    $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable(\''.$type.'\')" placeholder="Search..." style="width: 20%;">';
 
     if($type == "problem"){
         $str .= "<table id='problemTable'><thead><tr>";
