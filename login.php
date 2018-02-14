@@ -1,5 +1,5 @@
 <?php session_start();
-	$_SESSION['loginError'];
+	session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
