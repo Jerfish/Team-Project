@@ -1,3 +1,6 @@
+<?php session_start();
+	$_SESSION['loginError'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,6 +172,7 @@
 				<label id="passwordLabel" for="password">Password</label>
 				<input type="password" name="password" id="password">
 				<input type="submit" id="submitButton" value="Log in">
+				<?php if($_SESSION['loginError'] == true) echo "Username or Password is incorrect"; ?>
 			</div>
 		</div>	
 		

@@ -2,14 +2,15 @@
 //start a session allowing session variables to be created and passed, utilised when 'retaining' logged in user
 session_start();
     
+//include the file which contains the password and username of the database
+include "team11-mysql-connect.php";	
+	
 //declare all database variables used to connect to the database
 $dbhost = 'localhost';
-$dbusername = 'root';
-$dbpassword = 'vV7?m3Q4';
 $dbname = 'team11project';
 
 //make a connection to the database, based on above variables, and assign this connection to a variable
-$conn = mysqli_connect($dbhost, $dbusername, $dbpassword, $dbname); 
+$conn = mysqli_connect($dbhost, $username, $password, $dbname); 
 
 //ensure the connection is made by creating an error message if the connection fails
 if (!$conn) {
@@ -42,6 +43,7 @@ if ($result->num_rows > 0)
 		
 		//if the passwords match then redirect user to the main page, the session variable is used to ensure only a logged in user may access the page, currently not working
 		$_SESSION['authenticated'] = true;
+		$_SESSION['user'] = $usernameValue;
 		header('location: index.php');
 	}
 	
@@ -49,6 +51,7 @@ if ($result->num_rows > 0)
 	else
 	{
 		header('location: login.php');
+		$_SESSION['loginError'] = true;
 	}
 }
 
@@ -56,6 +59,7 @@ if ($result->num_rows > 0)
 else
 {
 	header('location: login.php');
+	$_SESSION['loginError'] = true;
 }
 
 //close the connection with the database
