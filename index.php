@@ -92,7 +92,7 @@ else {}
             function getTable(type) {
                 $(document).ready(function() {
                     $.get("getTable.php", {'type':type}, function(data) {
-                        document.getElementById("probTable").innerHTML = data;
+                        document.getElementById(type+"Div").innerHTML = data;
                     })
                 }(jQuery))
             }
@@ -291,8 +291,8 @@ else {}
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
                 <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
-                <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main')">Specialists List</span>
-                <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main')">Hardware/Software List</span>
+                <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
+                <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
                 <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>
             </div>
 
@@ -388,20 +388,20 @@ else {}
 
             <div id="problemsList" class="tabContent">
                 <h3>Problems List</h3>
-                <p id="probTable"></p>
+                <p id="problemDiv"></p>
 
             </div>
 
             <div id="specialistsList" class="tabContent">
                 <h3>Specialists List</h3>
-                Specialists table here.
+                <p id="specialistDiv"></p>
             </div>
 
             <div id="hardSoftWareList" class="tabContent">
                 <h3>Hardware List</h3>
-                Hardware Table here.
+                <p id="hardwareDiv"></p>
                 <h3>Software List</h3>
-                Software Table here.
+                <p id="softwareDiv"></p>
             </div>
 
             <div id="analytics" class="tabContent">
