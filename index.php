@@ -2,7 +2,6 @@
 	
 	//My attempt at stopping people directly type the URL to access the page, doesn't work properly yet
 	session_start();
-
 	//Checks whether the $_SESSION variable 'authenticated' has been assigned anything, if the user is logged in it should be set to 'true', if not redirect to the login page
 	if (!isset($_SESSION['authenticated']))
 	{
@@ -105,7 +104,15 @@
                     })
                 }(jQuery))
             }
-            
+
+						//gets an array of all data useful for software analytics
+						
+						function useSoftTable(){
+							ob_start();
+							include 'getSoftTable.php';
+							$softwareArray[] = ob_get_clean();
+							echo $softwareArray[];
+						}
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
 			function openTab(event, tabName, type) {
                 var i, tabContent, mainTab;
@@ -215,7 +222,6 @@
 			div.mainMenu span.active {
                 background-color: #ccc;
             }
-
             .tabContent {
                 float: left;
                 padding: 0px 12px;
@@ -344,7 +350,7 @@
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main')">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable()">Analytics</span>
             </div>
 
             <div id="home" class="tabContent">
