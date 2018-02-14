@@ -110,8 +110,8 @@
 						function useSoftTable(){
 							ob_start();
 							include 'getSoftTable.php';
-							$softwareArray[] = ob_get_clean();
-							echo $softwareArray[];
+							softwareArray[] = ob_get_clean();
+							echo softwareArray[];
 						}
             //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
 			function openTab(event, tabName, type) {
@@ -350,12 +350,12 @@
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable()">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');getSoftTable()">Analytics</span>
             </div>
 
             <div id="home" class="tabContent">
                 <h3>Home</h3>
-                Welcome to The Heldesk.
+                Welcome to The Helpdesk.
             </div>
             <div id="newProblem" class="tabContent">
                 <div class="subMenu">
