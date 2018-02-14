@@ -18,7 +18,8 @@
     <head>
         <title>Make-it-all Helpdesk</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-        <script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	    <script>
             
             function filterTable(i){
                 var input, filter, table, tr, td, i;
@@ -105,10 +106,49 @@
                 }(jQuery))
             }
             
-            function useSoftTable() {
+              function useSoftTable() {
                 $(document).ready(function() {
                     $.get("getSoftTable.php", {'type':'GET'}, function(data) {
-                        alert(data);
+											var obj = JSON.parse(data);
+											var length = obj.length;
+											var indexes[];
+											var software[];
+											var average[];
+											var startDate;
+											var endDate;
+											for(var x =0;x<length;x++){
+												if(indexes.includes(obj(x).SoftwareID)){
+												startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))	
+												endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))
+												average[x+1]=endDate-startDate;
+												}else{
+													indexes.push(obj(x).SoftwareID);
+													software[x+1] = obj(x).SoftwareName;
+													startDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))	
+													endDate = new Date((obj(x).CallDateTime.substring(0,4),(obj(x).CallDateTime.substring(5,7)-1,(obj(x).CallDateTime.substring(8,10),(obj(x).CallDateTime.substring(11,13),(obj(x).CallDateTime.substring(14,16),(obj(x).CallDateTime.substring(17,19))
+													average[x+1]=endDate-startDate;
+												}
+											}
+											
+											// Load google charts
+											google.charts.load('current', {'packages':['corechart']});
+											google.charts.setOnLoadCallback(drawChart);
+											
+											// Draw the chart using values from the two arrays
+											function drawChart() {
+											  var graphData = new Array();
+											  graphData[0] = ['Software', 'Average'];
+											  for (var i = 1; i < software.length; i++){
+											    graphData[i] = [ software[i], average[i]];
+											  }
+											  
+											  var table = google.visualization.arrayToDataTable(graphData, false);
+											  var options = {'Average time taken to solve a software issue', 'width':400, 'height':300};
+						
+											  // Display the chart
+											  var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+											  chart.draw(data, options);
+											}      
                     })
                 }(jQuery))
             }
