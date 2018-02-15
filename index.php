@@ -560,6 +560,7 @@ set the direction to "desc" and run the while loop again.*/
                                                         }
 }
                                                 });
+                    </script>
                 </div>
 
                 <div id="hardware" class="subTabContent">
