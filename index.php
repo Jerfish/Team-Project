@@ -166,17 +166,46 @@ set the direction to "desc" and run the while loop again.*/
                         var difference;
                         for(var x =0;x<length;x++){
                             if(indexes.includes(obj[x].SoftwareID)){
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDate$
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].Date$
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 information[x]=difference;
                             }else{
                                 indexes.push(obj[x].SoftwareID);
                                 software[x] = obj[x].SoftwareName;
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDate$
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].Date$
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 information[x]=difference;
+                            }
+                        }
+  })
+                }(jQuery))
+            }
+                 var hardware = [];
+                 var informationH = [];           
+                function useHardTable() {
+                $(document).ready(function() {
+                    $.get("getHardTable.php", function(data) {
+                        var obj = JSON.parse(data);
+                        var length = obj.length;
+                        var indexes = [];
+                        var startDate;
+                        var endDate;
+                        var difference;
+                        for(var x =0;x<length;x++){
+                            if(indexes.includes(obj[x].HardwareID)){
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                difference=(endDate-startDate)/1000;
+                                informationH[x]=difference;
+                            }else{
+                                indexes.push(obj[x].HardwareID);
+                                hardware[x] = obj[x].HardwareType;
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                difference=(endDate-startDate)/1000;
+                                informationH[x]=difference;
                             }
                         }
   })
@@ -417,7 +446,7 @@ set the direction to "desc" and run the while loop again.*/
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable()">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable();useHardTable()">Analytics</span>
             </div>
 
             <div id="home" class="tabContent">
@@ -529,7 +558,7 @@ set the direction to "desc" and run the while loop again.*/
 
             <div id="analytics" class="tabContent">
                 <div class="subMenu">
-                    <span class="subTab active" onclick="openTab(event, 'software', 'sub');useSoftTable();">Software Analytics</span>
+                    <span class="subTab active" onclick="openTab(event, 'analytics', 'sub')">Software Analytics</span>
                     <span class="subTab" onclick="openTab(event, 'hardware', 'sub')">Hardware Analytics</span>
                     <span class="subTab" onclick="openTab(event, 'specialists', 'sub')">Specialists Analytics</span>
                 </div>
@@ -565,6 +594,31 @@ set the direction to "desc" and run the while loop again.*/
 
                 <div id="hardware" class="subTabContent">
                     Hardware Analytics
+                    <canvas id="hardwareChart" width="400px", height="150px"></canvas>
+                        <script>
+                                var ctx = document.getElementById("hardwareChart").getContext('2d');
+                                var chart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                        labels: hardware,
+                                                        datasets: [{
+                                                                label: "Hardware Time to Solve (seconds)",
+                                                                backgroundColor: 'rgb(0,0,0)',
+                                                                borderCoolor: 'rgb(0,0,0)',
+                                                                data: informationH,
+                                                                }]
+                                                },
+                                                options: {
+                                                        scales:{
+                                                                yAxes:[{
+                                                                        ticks:{
+                                                                                suggestedMin: 0,
+                                                                                }
+                                                                        }]
+                                                        }
+}
+                                                });
+                    </script>
                 </div>
 
                 <div id="specialists" class="subTabContent">
