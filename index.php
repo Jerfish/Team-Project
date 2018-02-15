@@ -18,7 +18,7 @@ session_destroy();
     <head>
         <title>Make-it-all Helpdesk</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>    
         <script>
 
             function filterTable(i){
@@ -153,63 +153,35 @@ set the direction to "desc" and run the while loop again.*/
                     }(jQuery))
                 }
 
+                var software = [];
+                 var information = [];           
                 function useSoftTable() {
-                    $(document).ready(function() {
-                        $.get("getSoftTable.php", function(data) {
-                            alert(data);
-                            var obj = JSON.parse(data);
-                            alert(obj);
-
-                            var length = obj.length;
-                            var indexes = [];
-                            var software = [];
-                            var average = [];
-                            var startDate;
-                            var endDate;
-                            for(var x =0;x<length-1;x++){
-                                if(indexes.includes(obj(x).SoftwareID)){
-                                    startDate = new Date((obj(x).CallDateTime.substring(0,4)),(obj(x).CallDateTime.substring(5,7)-1),(obj(x).CallDateTime.substring(8,10)),(obj(x).CallDateTime.substring(11,13)),(obj(x).CallDateTime.substring(14,16)),(obj(x).CallDateTime.substring(17,19)));   
-                                    endDate = new Date((obj(x).CallDateTime.substring(0,4)),(obj(x).CallDateTime.substring(5,7)-1),(obj(x).CallDateTime.substring(8,10)),(obj(x).CallDateTime.substring(11,13)),(obj(x).CallDateTime.substring(14,16)),(obj(x).CallDateTime.substring(17,19)));
-                                    average[x+1]=endDate-startDate;
-                                }else{
-                                    indexes.push(obj(x).SoftwareID);
-                                    software[x+1] = obj(x).SoftwareName;
-                                    startDate = new Date((obj(x).CallDateTime.substring(0,4)),(obj(x).CallDateTime.substring(5,7)-1),(obj(x).CallDateTime.substring(8,10)),(obj(x).CallDateTime.substring(11,13)),(obj(x).CallDateTime.substring(14,16)),(obj(x).CallDateTime.substring(17,19)));   
-                                    endDate = new Date((obj(x).CallDateTime.substring(0,4)),(obj(x).CallDateTime.substring(5,7)-1),(obj(x).CallDateTime.substring(8,10)),(obj(x).CallDateTime.substring(11,13)),(obj(x).CallDateTime.substring(14,16)),(obj(x).CallDateTime.substring(17,19)));
-                                    average[x+1]=endDate-startDate;
-                                }
+                $(document).ready(function() {
+                    $.get("getSoftTable.php", function(data) {
+                        var obj = JSON.parse(data);
+                        var length = obj.length;
+                        var indexes = [];
+                        var startDate;
+                        var endDate;
+                        var difference;
+                        for(var x =0;x<length;x++){
+                            if(indexes.includes(obj[x].SoftwareID)){
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDate$
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].Date$
+                                difference=(endDate-startDate)/1000;
+                                information[x]=difference;
+                            }else{
+                                indexes.push(obj[x].SoftwareID);
+                                software[x] = obj[x].SoftwareName;
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDate$
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].Date$
+                                difference=(endDate-startDate)/1000;
+                                information[x]=difference;
                             }
-
-                            // Load google charts
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart());
-
-
-
-
-                        })
-
-
-                    }(jQuery))
-                }
-
-                // Draw the chart using values from the two arrays
-                function drawChart() {
-                    var graphData = new Array();
-                    graphData[0] = ['Software', 'Average'];
-                    for (var i = 1; i < software.length; i++){
-                        graphData[i] = [ software[i], average[i]];
-                    }
-
-                    var table = google.visualization.arrayToDataTable(graphData, false);
-                    var options = {'title':'Average time taken to solve a software issue', 'width':400, 'height':300};
-
-                    // Display the chart
-                    var chart = new google.visualization.ColumnChart(document.getElementById('software'));
-                    chart.draw(data, options);      
-                }                                           //gets an array of all data useful for software analytics
-
-
+                        }
+  })
+                }(jQuery))
+            }
                 //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
                 function openTab(event, tabName, type) {
                     var i, tabContent, mainTab;
@@ -557,13 +529,37 @@ set the direction to "desc" and run the while loop again.*/
 
             <div id="analytics" class="tabContent">
                 <div class="subMenu">
-                    <span class="subTab active" onclick="openTab(event, 'software', 'sub')">Software Analytics</span>
+                    <span class="subTab active" onclick="openTab(event, 'software', 'sub');useSoftTable();">Software Analytics</span>
                     <span class="subTab" onclick="openTab(event, 'hardware', 'sub')">Hardware Analytics</span>
                     <span class="subTab" onclick="openTab(event, 'specialists', 'sub')">Specialists Analytics</span>
                 </div>
                 <h3>Analytics</h3>
                 <div id="software" class="subTabContent">
                     Software Analytics
+                     <canvas id="softwareChart" width="400px", height="150px"></canvas>
+                        <script>
+                                var ctx = document.getElementById("softwareChart").getContext('2d');
+                                var chart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                        labels: software,
+                                                        datasets: [{
+                                                                label: "Software Time to Solve (seconds)",
+                                                                backgroundColor: 'rgb(0,0,0)',
+                                                                borderCoolor: 'rgb(0,0,0)',
+                                                                data: information,
+                                                                }]
+                                                },
+                                                options: {
+                                                        scales:{
+                                                                yAxes:[{
+                                                                        ticks:{
+                                                                                suggestedMin: 0,
+                                                                                }
+                                                                        }]
+                                                        }
+}
+                                                });
                 </div>
 
                 <div id="hardware" class="subTabContent">
