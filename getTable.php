@@ -47,7 +47,6 @@ GROUP BY Specialists.SpecialistID";
     echo "this will work later";
 }
 $result = $conn->query($sql);
-//$value = json_encode($result->fetch_all());
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -69,9 +68,9 @@ if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $str .= "<tr onclick='viewProblem(".$row["ProblemID"].")'><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
 
-            if($row["Hardware ID"] != 0){
+            if($row["HardwareID"] != 0){
                 $str .= "Hardware";
-            }else if($row["Software ID"] != 0){
+            }else if($row["SoftwareID"] != 0){
                 $str .= "Software";
             }else{
                 $str .= "Error";
@@ -92,7 +91,8 @@ if ($result->num_rows > 0) {
         $str .= "<th onclick='sortTable(6, \"specialistTable\")'>Personnel ID</th>";
         $str .= "</tr></thead><tbody>";
         while($row = $result->fetch_assoc()) {
-            $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>".$row["Completed Problems"]."</td><td>".$row["PersonnelID"]."</td></tr>";
+            $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>";
+            $str .= $row["Completed Problems"]."</td><td>".$row["PersonnelID"]."</td></tr>";
         }
         $str .= '</tbody></table>';
         echo $str;
@@ -128,3 +128,13 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 ?>
+
+
+
+
+
+
+
+
+
+
