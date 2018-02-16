@@ -8,7 +8,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT Personnel.Name, COUNT(ProblemInfo.SolvedByID) FROM Personnel JOIN Specialists ON  Personnel.PersonnelID = Specialists.PersonnelID JOIN ProblemInfo ON Specialists.SpecialistID = ProblemInfo.SolvedByID WHERE ProblemInfo.SolvedByID > 0 GROUP BY Personnel.Name";
+$sql = "SELECT Personnel.Name, COUNT(ProblemInfo.SolvedByID) as ProblemCount FROM Personnel JOIN Specialists ON  Personnel.PersonnelID = Specialists.PersonnelID JOIN ProblemInfo ON Specialists.SpecialistID = ProblemInfo.SolvedByID WHERE ProblemInfo.SolvedByID > 0 GROUP BY Personnel.Name";
 $result = $conn->query($sql);
 $rows = [];
 while ($row = $result->fetch_assoc()) {
