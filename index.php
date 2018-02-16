@@ -211,6 +211,21 @@ set the direction to "desc" and run the while loop again.*/
   })
                 }(jQuery))
             }
+                          var specialists = [];
+                var problemSolved = [];           
+               function useSpecTable() {
+               $(document).ready(function() {
+                   $.get("getSoftTable.php", function(data) {
+                       var obj = JSON.parse(data);  
+                       var length = obj.length;
+                       for(var z=0;z<length;z++){
+                         specialists.push(obj[x].PersonnelName);
+                         problemSolved.push(obj[x].COUNT(ProblemInfo.SolvedByID));
+                       }                   
+ })
+               }(jQuery))
+           }
+                
                 //Switches the focused section to the correct page when a tab is selected, uses the selected tab as parameter to determine displayed page
                 function openTab(event, tabName, type) {
                     var i, tabContent, mainTab;
@@ -446,7 +461,7 @@ set the direction to "desc" and run the while loop again.*/
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable();useHardTable()">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');useSoftTable();useHardTable();useSpecTable();">Analytics</span>
             </div>
 
             <div id="home" class="tabContent">
@@ -623,6 +638,31 @@ set the direction to "desc" and run the while loop again.*/
 
                 <div id="specialists" class="subTabContent">
                     Specialists Analytics
+                    <canvas id="specialistsChart" width="400px", height="150px"></canvas>
+                                   <script>
+                                           var ctx = document.getElementById("softwareChart").getContext('2d');
+                                           var chart = new Chart(ctx, {
+                                                           type: 'bar',
+                                                           data: {
+                                                                   labels: specialists,
+                                                                   datasets: [{
+                                                                           label: "Problems solved per specialist",
+                                                                           backgroundColor: 'rgb(0,0,0)',
+                                                                           borderCoolor: 'rgb(0,0,0)',
+                                                                           data: problemSolved,
+                                                                           }]
+                                                           },
+                                                           options: {
+                                                                   scales:{
+                                                                           yAxes:[{
+                                                                                   ticks:{
+                                                                                           suggestedMin: 0,
+                                                                                           }
+                                                                                   }]
+                                                                   }
+           }
+                                                           });
+                               </script>
                 </div>
             </div>
         </div>
