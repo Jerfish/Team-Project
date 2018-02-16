@@ -166,15 +166,15 @@ set the direction to "desc" and run the while loop again.*/
                         var difference;
                         for(var x =0;x<length;x++){
                             if(indexes.includes(obj[x].SoftwareID)){
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13)),(obj[x].CallDateTime.substring(14,16)),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13)),(obj[x].DateTimeSolved.substring(14,16)),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 information[x]=difference;
                             }else{
                                 indexes.push(obj[x].SoftwareID);
                                 software[x] = obj[x].SoftwareName;
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13)),(obj[x].CallDateTime.substring(14,16)),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13)),(obj[x].DateTimeSolved.substring(14,16)),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 information[x]=difference;
                             }
@@ -195,15 +195,15 @@ set the direction to "desc" and run the while loop again.*/
                         var difference;
                         for(var x =0;x<length;x++){
                             if(indexes.includes(obj[x].HardwareID)){
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13)),(obj[x].CallDateTime.substring(14,16)),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13)),(obj[x].DateTimeSolved.substring(14,16)),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 informationH[x]=difference;
                             }else{
                                 indexes.push(obj[x].HardwareID);
                                 hardware[x] = obj[x].HardwareType;
-                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13),(obj[x].CallDateTime.substring(14,16),(obj[x].callDateTime.substring(17,19)));
-                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13),(obj[x].DateTimeSolved.substring(14,16),(obj[x].DateTimeSolved.substring(17,19)));
+                                startDate = new Date((obj[x].CallDateTime.substring(0,4)),(obj[x].CallDateTime.substring(5,7)-1),(obj[x].CallDateTime.substring(8,10)),(obj[x].CallDateTime.substring(11,13)),(obj[x].CallDateTime.substring(14,16)),(obj[x].callDateTime.substring(17,19)));
+                                endDate = new Date((obj[x].DateTimeSolved.substring(0,4)),(obj[x].DateTimeSolved.substring(5,7)-1),(obj[x].DateTimeSolved.substring(8,10)),(obj[x].DateTimeSolved.substring(11,13)),(obj[x].DateTimeSolved.substring(14,16)),(obj[x].DateTimeSolved.substring(17,19)));
                                 difference=(endDate-startDate)/1000;
                                 informationH[x]=difference;
                             }
