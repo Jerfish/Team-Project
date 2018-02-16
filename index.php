@@ -220,7 +220,7 @@ set the direction to "desc" and run the while loop again.*/
                        var length = obj.length;
                        for(var z=0;z<length;z++){
                          specialists.push(obj[z].PersonnelName);
-                         problemSolved.push(obj[z].COUNT(ProblemInfo.SolvedByID));
+                         problemSolved.push(obj[z].ProblemCount);
                        }                   
  })
                }(jQuery))
