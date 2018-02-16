@@ -219,8 +219,8 @@ set the direction to "desc" and run the while loop again.*/
                        var obj = JSON.parse(data);  
                        var length = obj.length;
                        for(var z=0;z<length;z++){
-                         specialists.push(obj[x].PersonnelName);
-                         problemSolved.push(obj[x].COUNT(ProblemInfo.SolvedByID));
+                         specialists.push(obj[z].PersonnelName);
+                         problemSolved.push(obj[z].COUNT(ProblemInfo.SolvedByID));
                        }                   
  })
                }(jQuery))
