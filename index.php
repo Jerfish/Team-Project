@@ -611,8 +611,8 @@ set the direction to "desc" and run the while loop again.*/
                     Hardware Analytics
                     <canvas id="hardwareChart" width="400px", height="150px"></canvas>
                         <script>
-                                var ctx = document.getElementById("hardwareChart").getContext('2d');
-                                var chart = new Chart(ctx, {
+                                var ctx2 = document.getElementById("hardwareChart").getContext('2d');
+                                var chart2 = new Chart(ctx2, {
                                                 type: 'bar',
                                                 data: {
                                                         labels: hardware,
@@ -640,8 +640,8 @@ set the direction to "desc" and run the while loop again.*/
                     Specialists Analytics
                     <canvas id="specialistsChart" width="400px", height="150px"></canvas>
                                    <script>
-                                           var ctx = document.getElementById("softwareChart").getContext('2d');
-                                           var chart = new Chart(ctx, {
+                                           var ctx3 = document.getElementById("softwareChart").getContext('2d');
+                                           var chart3 = new Chart(ctx3, {
                                                            type: 'bar',
                                                            data: {
                                                                    labels: specialists,
