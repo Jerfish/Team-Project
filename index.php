@@ -491,16 +491,6 @@ openTab(event, 'viewProblem', 'sub');
                             <input type="text" class="form-control" id="hardwareID" placeholder="C-40392-B"><br>
                             <label for="softwareId" id="softwareIdLabel">Software ID</label>
                             <input type="text" class="form-control" id="softwareId" placeholder="S1039"><br>
-                            <label for="softwareLicence" id="softwareLicenceLabel">Software Licenced?</label>
-                            <select class="form-control" id="softwareLicence" placeholder="Select an option">
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select><br>
-                            <label for="softwareSupport" id="softwareSupportLabel">Software Supported?</label>
-                            <select class="form-control" id="softwareSupport" placeholder="Select an option">
-                                <option>Yes</option>
-                                <option>No</option>                             
-                            </select><br>
                             <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
                             <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
                             <div class="spacer"></div>
