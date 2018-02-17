@@ -508,9 +508,9 @@
             </div>
             <div id="analytics" class="tabContent">
                 <div class="subMenu">
-                    <span class="subTab active" onclick="openTab(event, 'analytics', 'sub')">Software Analytics</span>
-                    <span class="subTab" onclick="openTab(event, 'hardware', 'sub')">Hardware Analytics</span>
-                    <span class="subTab" onclick="openTab(event, 'specialists', 'sub')">Specialists Analytics</span>
+                    <span class="subTab active" onclick="openTab(event, 'analyticsSoftware', 'sub');useSoftTable();">Software Analytics</span>
+                    <span class="subTab" onclick="openTab(event, 'analyticsHardware', 'sub'); useHardTable();">Hardware Analytics</span>
+                    <span class="subTab" onclick="openTab(event, 'analyticsSpecialists', 'sub');useSpecTable();">Specialists Analytics</span>
                 </div>
                 <h3>Analytics</h3>
                 <div id="software" class="subTabContent">
@@ -597,6 +597,7 @@
                                                            });
                                </script>
                 </div>
+                <script>openTab(event, 'analyticsSoftware', 'sub');useSoftTable();</script>
             </div>
         </div>
         <script>openTab(event, 'home', 'main');</script>
