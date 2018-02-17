@@ -397,6 +397,9 @@ session_destroy();
             div.mainMenu span.active {
                 background-color: #ccc;
             }
+            div.subMenu span.active {
+                background-color: #ccc;
+            }
             .tabContent {
                 float: left;
                 padding: 0px 12px;
