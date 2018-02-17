@@ -455,7 +455,7 @@ openTab(event, 'viewProblem', 'sub');
                     <div id="requiredInfo" class="subTabContent">
 
                         <div class="form-group">
-                            <label for="caller">Caller ID*</label>
+                            <label for="caller">Caller Name*</label>
                             <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs" required><br>
                             <label for="operator">Helpdesk Operator Name*</label>
                             <input type="text" class="form-control" id="operator" placeholder="Alice Smith" required><br>
@@ -483,6 +483,10 @@ openTab(event, 'viewProblem', 'sub');
                     </div>
                     <div id="additionalInfo" class="subTabContent">
                         <div class="form-group">
+                            <label for="callerID">Caller ID</label>
+                            <input type="text" class="form-control" id="callerID" placeholder="Joe Bloggs" ><br>
+                            <label for="operatorID">Helpdesk Operator Name*</label>
+                            <input type="text" class="form-control" id="operatorID" placeholder="Alice Smith"><br>
                             <label for="hardwareID" id="hardwareIDLabel">Hardware ID</label>
                             <input type="text" class="form-control" id="hardwareID" placeholder="C-40392-B"><br>
                             <label for="softwareId" id="softwareIdLabel">Software ID</label>
