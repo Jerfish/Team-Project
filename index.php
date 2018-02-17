@@ -221,6 +221,37 @@ session_destroy();
             function dropDownMenu() {
                 document.getElementById("userDropDownMenu").classList.toggle("visible");
             }
+            
+            function hideOption(){
+                if (document.getElementById("hardwaresoftware").selectedIndex == 1) {
+                document.getElementById("softwareLicence").style.display = "unset";
+                document.getElementById("softwareLicenceLabel").style.display = "unset";
+                document.getElementById("softwareSupport").style.display = "unset";
+                document.getElementById("softwareSupportLabel").style.display = "unset";
+                document.getElementById("softwareLabel").style.display = "unset";
+                document.getElementById("software").style.display = "unset";
+                document.getElementById("softwareIdLabel").style.display = "unset";
+                document.getElementById("softwareId").style.display = "unset";
+                document.getElementById("hardware").style.display = "none";
+                document.getElementById("hardwareLabel").style.display = "none";
+                document.getElementById("hardwareSerial").style.display = "none";
+                document.getElementById("hardwareSerialLabel").style.display = "none";
+            }
+            if (document.getElementById("hardwaresoftware").selectedIndex == 0) {
+                document.getElementById("hardwareSerial").style.display = "unset";
+                document.getElementById("hardwareSerialLabel").style.display = "unset";
+                document.getElementById("hardwareLabel").style.display = "unset";
+                document.getElementById("hardware").style.display = "unset";
+                document.getElementById("software").style.display = "none";
+                document.getElementById("softwareLabel").style.display = "none";
+                document.getElementById("softwareId").style.display = "none";
+                document.getElementById("softwareIdLabel").style.display = "none";
+                document.getElementById("softwareLicence").style.display = "none";
+                document.getElementById("softwareLicenceLabel").style.display = "none";
+                document.getElementById("softwareSupport").style.display = "none";
+                document.getElementById("softwareSupportLabel").style.display = "none";
+            }
+            }
 
         </script>
         <style>
@@ -420,16 +451,16 @@ session_destroy();
                     <div id="requiredInfo" class="subTabContent">
 
                         <div class="form-group">
-                            <label for="caller">Caller Name</label>
-                            <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs"><br>
-                            <label for="operator">Helpdesk Operator Name</label>
-                            <input type="text" class="form-control" id="operator" placeholder="Alice Smith"><br>
-                            <label for="time">Call Time/Date</label>
-                            <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50"><br>
-                            <label for="serial">Reason for Call</label>
-                            <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing"><br>
-                            <label for="hardware/software">Hardware/Software</label>
-                            <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()">
+                            <label for="caller">Caller Name*</label>
+                            <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs" required><br>
+                            <label for="operator">Helpdesk Operator Name*</label>
+                            <input type="text" class="form-control" id="operator" placeholder="Alice Smith" required><br>
+                            <label for="time">Call Time/Date*</label>
+                            <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50" required><br>
+                            <label for="serial">Reason for Call*</label>
+                            <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing" required><br>
+                            <label for="hardwaresoftware">Hardware/Software*</label>
+                            <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()" required>
                                 <option>Hardware</option>
                                 <option>Software</option>
                             </select><br>
@@ -449,7 +480,7 @@ session_destroy();
                     <div id="additionalInfo" class="subTabContent">
                         <div class="form-group">
                             <label for="callerId">Caller ID</label>
-                            <input type="text" class="form-control" id="callerId" placeholder="p343231"><br>
+                            <input type="text" class="form-control" id="callerId" placeholder="3"><br>
                             <label for="callerJob">Caller Job</label>
                             <input type="text" class="form-control" id="callerJob" placeholder="Programmer"><br>
                             <label for="callerDept">Caller Department</label>
