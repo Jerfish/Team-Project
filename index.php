@@ -206,6 +206,10 @@ session_destroy();
                 document.getElementById(tabName).style.display = "inline";
                 event.currentTarget.className += " active";
             }
+            
+            function viewProblem(x){
+openTab(event, 'viewProblem', 'sub');
+}
 
             //redirects the user to the login page when the logout option is selected in the user/profile drop down menu
             function logout() {
@@ -221,36 +225,36 @@ session_destroy();
             function dropDownMenu() {
                 document.getElementById("userDropDownMenu").classList.toggle("visible");
             }
-            
+
             function hideOption(){
                 if (document.getElementById("hardwaresoftware").selectedIndex == 1) {
-                document.getElementById("softwareLicence").style.display = "unset";
-                document.getElementById("softwareLicenceLabel").style.display = "unset";
-                document.getElementById("softwareSupport").style.display = "unset";
-                document.getElementById("softwareSupportLabel").style.display = "unset";
-                document.getElementById("softwareLabel").style.display = "unset";
-                document.getElementById("software").style.display = "unset";
-                document.getElementById("softwareIdLabel").style.display = "unset";
-                document.getElementById("softwareId").style.display = "unset";
-                document.getElementById("hardware").style.display = "none";
-                document.getElementById("hardwareLabel").style.display = "none";
-                document.getElementById("hardwareSerial").style.display = "none";
-                document.getElementById("hardwareSerialLabel").style.display = "none";
-            }
-            if (document.getElementById("hardwaresoftware").selectedIndex == 0) {
-                document.getElementById("hardwareSerial").style.display = "unset";
-                document.getElementById("hardwareSerialLabel").style.display = "unset";
-                document.getElementById("hardwareLabel").style.display = "unset";
-                document.getElementById("hardware").style.display = "unset";
-                document.getElementById("software").style.display = "none";
-                document.getElementById("softwareLabel").style.display = "none";
-                document.getElementById("softwareId").style.display = "none";
-                document.getElementById("softwareIdLabel").style.display = "none";
-                document.getElementById("softwareLicence").style.display = "none";
-                document.getElementById("softwareLicenceLabel").style.display = "none";
-                document.getElementById("softwareSupport").style.display = "none";
-                document.getElementById("softwareSupportLabel").style.display = "none";
-            }
+                    document.getElementById("softwareLicence").style.display = "unset";
+                    document.getElementById("softwareLicenceLabel").style.display = "unset";
+                    document.getElementById("softwareSupport").style.display = "unset";
+                    document.getElementById("softwareSupportLabel").style.display = "unset";
+                    document.getElementById("softwareLabel").style.display = "unset";
+                    document.getElementById("software").style.display = "unset";
+                    document.getElementById("softwareIdLabel").style.display = "unset";
+                    document.getElementById("softwareId").style.display = "unset";
+                    document.getElementById("hardware").style.display = "none";
+                    document.getElementById("hardwareLabel").style.display = "none";
+                    document.getElementById("hardwareSerial").style.display = "none";
+                    document.getElementById("hardwareSerialLabel").style.display = "none";
+                }
+                if (document.getElementById("hardwaresoftware").selectedIndex == 0) {
+                    document.getElementById("hardwareSerial").style.display = "unset";
+                    document.getElementById("hardwareSerialLabel").style.display = "unset";
+                    document.getElementById("hardwareLabel").style.display = "unset";
+                    document.getElementById("hardware").style.display = "unset";
+                    document.getElementById("software").style.display = "none";
+                    document.getElementById("softwareLabel").style.display = "none";
+                    document.getElementById("softwareId").style.display = "none";
+                    document.getElementById("softwareIdLabel").style.display = "none";
+                    document.getElementById("softwareLicence").style.display = "none";
+                    document.getElementById("softwareLicenceLabel").style.display = "none";
+                    document.getElementById("softwareSupport").style.display = "none";
+                    document.getElementById("softwareSupportLabel").style.display = "none";
+                }
             }
 
         </script>
