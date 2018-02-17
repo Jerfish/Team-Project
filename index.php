@@ -516,11 +516,11 @@ session_destroy();
             <div class="mainMenu">
                 <div id="mainImage"><img src="logo.png" alt="Make It All" style="padding:10px; max-width:88%; max-height:88%;"></div>
                 <span class="mainTab active" onclick="openTab(event, 'home', 'main')">Home</span>
-                <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(event, 'requiredInfo', 'sub');">New Problem</span>
-                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');openTab(event, 'problemsTable','sub');">Problems List</span>
+                <span class="mainTab" onclick="openTab(event, 'newProblem', 'main');openTab(null, 'requiredInfo', 'sub');">New Problem</span>
+                <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');openTab(null, 'problemsTable','sub');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');openTab(event, 'analyticsSoftware', 'sub');">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');openTab(null, 'analyticsSoftware', 'sub');">Analytics</span>
             </div>
             <div id="home" class="tabContent">
                 <h3>Home</h3>
