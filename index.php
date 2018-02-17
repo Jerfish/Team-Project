@@ -455,7 +455,7 @@ openTab(event, 'viewProblem', 'sub');
                     <div id="requiredInfo" class="subTabContent">
 
                         <div class="form-group">
-                            <label for="caller">Caller Name*</label>
+                            <label for="caller">Caller ID*</label>
                             <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs" required><br>
                             <label for="operator">Helpdesk Operator Name*</label>
                             <input type="text" class="form-control" id="operator" placeholder="Alice Smith" required><br>
@@ -483,16 +483,8 @@ openTab(event, 'viewProblem', 'sub');
                     </div>
                     <div id="additionalInfo" class="subTabContent">
                         <div class="form-group">
-                            <label for="callerId">Caller ID</label>
-                            <input type="text" class="form-control" id="callerId" placeholder="3"><br>
-                            <label for="callerJob">Caller Job</label>
-                            <input type="text" class="form-control" id="callerJob" placeholder="Programmer"><br>
-                            <label for="callerDept">Caller Department</label>
-                            <input type="text" class="form-control" id="callerDept" placeholder="Sales"><br>
-                            <label for="CallerTelNum">Caller Telephone Number</label>
-                            <input type="text" class="form-control" id="callerTelNum" placeholder="07829473628"><br>
-                            <label for="hardwareSerial" id="hardwareSerialLabel">Hardware Serial Number</label>
-                            <input type="text" class="form-control" id="hardwareSerial" placeholder="C-40392-B"><br>
+                            <label for="hardwareID" id="hardwareIDLabel">Hardware ID</label>
+                            <input type="text" class="form-control" id="hardwareID" placeholder="C-40392-B"><br>
                             <label for="softwareId" id="softwareIdLabel">Software ID</label>
                             <input type="text" class="form-control" id="softwareId" placeholder="S1039"><br>
                             <label for="softwareLicence" id="softwareLicenceLabel">Software Licenced?</label>
@@ -507,8 +499,6 @@ openTab(event, 'viewProblem', 'sub');
                             </select><br>
                             <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
                             <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
-                            <label for="specialistName" id="specialistNameLabel">Assigned Specialist Name</label>
-                            <input type="text" class="form-control" id="specialistName" placeholder="John Peters"><br>
                             <div class="spacer"></div>
                         </div>
                         <input type='button' value='Next' onclick="openTab(event, 'descriptionLog', 'sub');">
