@@ -461,17 +461,17 @@ openTab(event, 'viewProblem', 'sub');
                             <input type="text" class="form-control" id="operator" placeholder="Alice Smith" required><br>
                             <label for="time">Call Time/Date*</label>
                             <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50" required><br>
-                            <label for="serial">Reason for Call*</label>
+                            <label for="reason">Reason for Call*</label>
                             <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing" required><br>
                             <label for="hardwaresoftware">Hardware/Software*</label>
                             <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()" required>
                                 <option>Hardware</option>
                                 <option>Software</option>
                             </select><br>
-                            <label for="hardware" id="hardwareLabel">Hardware Affected</label>
-                            <input type="text" class="form-control" id="hardware" placeholder="Kodak Printer"><br>
-                            <label for="software" id="softwareLabel">Software Affected</label>
-                            <input type="text" class="form-control" id="software" placeholder="Photoshop"><br>
+                            <label for="hardwareID" id="hardwareLabel">Hardware Affected</label>
+                            <input type="text" class="form-control" id="hardwareID" placeholder="Kodak Printer"><br>
+                            <label for="softwareId" id="softwareLabel">Software Affected</label>
+                            <input type="text" class="form-control" id="softwareId" placeholder="Photoshop"><br>
                             <label for="os">Operating System</label>
                             <input type="text" class="form-control" id="os" placeholder="Windows/Mac OS/Linux"><br>
                             <label for="type">Problem Type</label>
@@ -487,10 +487,10 @@ openTab(event, 'viewProblem', 'sub');
                             <input type="text" class="form-control" id="callerID" placeholder="Joe Bloggs" ><br>
                             <label for="operatorID">Helpdesk Operator Name*</label>
                             <input type="text" class="form-control" id="operatorID" placeholder="Alice Smith"><br>
-                            <label for="hardwareID" id="hardwareIDLabel">Hardware ID</label>
-                            <input type="text" class="form-control" id="hardwareID" placeholder="C-40392-B"><br>
-                            <label for="softwareId" id="softwareIdLabel">Software ID</label>
-                            <input type="text" class="form-control" id="softwareId" placeholder="S1039"><br>
+                            <label for="hardware" id="hardwareIDLabel">Affected Hardware</label>
+                            <input type="text" class="form-control" id="hardware" placeholder="C-40392-B"><br>
+                            <label for="software" id="softwareIdLabel">Affected Software</label>
+                            <input type="text" class="form-control" id="software" placeholder="S1039"><br>
                             <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
                             <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
                             <div class="spacer"></div>
