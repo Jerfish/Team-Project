@@ -26,7 +26,8 @@ session_destroy();
 ?>
 <html>
     <head>
-        <title>Make-it-all Helpdesk</title>
+        <title>T11 Helpdesk</title>
+        <link rel="icon" href="logo.png">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script>
@@ -117,6 +118,8 @@ session_destroy();
             function useSoftTable() {
                 $(document).ready(function() {
                     $.get("getSoftTable.php", function(data) {
+                        information = [];
+                        software = [];			
                         var obj = JSON.parse(data);
                         var length = obj.length;
                         var indexes = [];
@@ -139,6 +142,28 @@ session_destroy();
                             }
                         }
                     })
+                    var ctx = document.getElementById("softwareChart").getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: software,
+                            datasets: [{
+                                label: "Software Time to Solve (seconds)",
+                                backgroundColor: 'rgb(0,0,0)',
+                                borderCoolor: 'rgb(0,0,0)',
+                                data: information,
+                            }]
+                        },
+                        options: {
+                            scales:{
+                                yAxes:[{
+                                    ticks:{
+                                        suggestedMin: 0,
+                                    }
+                                }]
+                            }
+                        }
+                    });
                 }(jQuery))
             }
 
@@ -147,6 +172,8 @@ session_destroy();
             function useHardTable() {
                 $(document).ready(function() {
                     $.get("getHardTable.php", function(data) {
+                        hardware = [];
+                        informationH = [];					
                         var obj = JSON.parse(data);
                         var length = obj.length;
                         var indexes = [];
@@ -169,6 +196,29 @@ session_destroy();
                             }
                         }
                     })
+                    var ctx2 = document.getElementById("hardwareChart").getContext('2d');
+                    var chart2 = new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                            labels: hardware,
+                            datasets: [{
+                                label: "Hardware Time to Solve (seconds)",
+                                backgroundColor: 'rgb(0,0,0)',
+                                borderCoolor: 'rgb(0,0,0)',
+                                data: informationH,
+                            }]
+                        },
+                        options: {
+                            scales:{
+                                yAxes:[{
+                                    ticks:{
+                                        suggestedMin: 0,
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
                 }(jQuery))
             }
 
@@ -176,14 +226,40 @@ session_destroy();
             var problemSolved = [];           
             function useSpecTable() {
                 $(document).ready(function() {
-                    $.get("getSoftTable.php", function(data) {
+                    $.get("getSpecTable.php", function(data) {
+                        specialists = [];
+                        problemSolved = [];
                         var obj = JSON.parse(data);  
                         var length = obj.length;
                         for(var z=0;z<length;z++){
-                            specialists.push(obj[z].PersonnelName);
+                            specialists.push(obj[z].Name);
                             problemSolved.push(obj[z].ProblemCount);
                         }                   
                     })
+
+                    var ctx3 = document.getElementById("specialistsChart").getContext('2d');
+                    var chart3 = new Chart(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: specialists,
+                            datasets: [{
+                                label: "Problems solved per specialist",
+                                backgroundColor: 'rgb(0,0,0)',
+                                borderCoolor: 'rgb(0,0,0)',
+                                data: problemSolved,
+                            }]
+                        },
+                        options: {
+                            scales:{
+                                yAxes:[{
+                                    ticks:{
+                                        suggestedMin: 0,
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
                 }(jQuery))
             }
 
@@ -206,10 +282,10 @@ session_destroy();
                 document.getElementById(tabName).style.display = "inline";
                 event.currentTarget.className += " active";
             }
-            
+
             function viewProblem(x){
-openTab(event, 'viewProblem', 'sub');
-}
+                openTab(event, 'viewProblem', 'sub');
+            }
 
             //redirects the user to the login page when the logout option is selected in the user/profile drop down menu
             function logout() {
@@ -398,13 +474,16 @@ openTab(event, 'viewProblem', 'sub');
 
         <!-- div which contains elements of the header bar including the 'title', user icon as well as the drop down menu form the user icon -->
         <div id="headerBar">
-            <div id="headerBarLabel">Team 11 Helpdesk Prototype</div>
+            <div id="headerBarLabel">T11 Helpdesk</div>
+
             <!-- holds the drop down menu items including, initally hidden, options as well as the icon to 'activate' the menu -->
             <div id="userDropDownHolder">
                 <img id="userIcon" src="userIcon.png" onclick="dropDownMenu()">
+
                 <!-- initially invisible div which holds the options for the user menu, when the icon is clicked the div is given a visible display attribute -->
                 <div id="userDropDownMenu" class="userDropDownContent">
-                    <!-- when working the top of the user drop down menu should display the currently 'logged in' user based on entered login details, doesn't currently work -->
+
+                    <!-- displays the user menu options, profile and logout, as well as the currently logged in user -->
                     <?php echo '<div class="loggedUser">User: '.$user.'</div>'; ?>
                     <div class="dropDownOption" onclick="profile()">Profile</div>
                     <div class="dropDownOption" onclick="logout()">Logout</div>
@@ -412,6 +491,8 @@ openTab(event, 'viewProblem', 'sub');
             </div>
         </div>
         <div class='container'>
+
+            <!-- a form contained in an, initially hidden, div which serves as the profile menu, allowing for password changes for a user -->
             <div id="profileMenu" class="userProfile">
                 <form method="post" action="passwordChange.php" id="passwordChangeForm">
                     <?php echo "<input type='text' name='currentUser' id='currentUser' value='".$user."' readonly>"; ?>
@@ -428,7 +509,7 @@ openTab(event, 'viewProblem', 'sub');
             <!-- checks, when a password change attempt is made, if the password was changed, whether old password was correct, and alerts whether a change was made -->
             <?php if($passwordChangeAttempt == true) {
     if($passwordChanged == true) echo "<script type='text/javascript'>alert('Password changed successfully!');</script>"; 
-    else if($passwordChanged == false) echo "<script type='text/javascript'>alert('Password change failed, please try again');</script>"; 
+    else if($passwordChanged == false) echo "<script type='text/javascript'>alert('Password change failed, please try again.');</script>"; 
 }
             ?>				
 
@@ -439,7 +520,7 @@ openTab(event, 'viewProblem', 'sub');
                 <span class="mainTab" onclick="openTab(event, 'problemsList', 'main');getTable('problem');openTab(event, 'problemsTable','sub');">Problems List</span>
                 <span class="mainTab" onclick="openTab(event, 'specialistsList', 'main');getTable('specialist');">Specialists List</span>
                 <span class="mainTab" onclick="openTab(event, 'hardSoftWareList', 'main');getTable('hardware');getTable('software');">Hardware/Software List</span>
-                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');openTab(event, 'analyticsSoftware', 'sub');useSoftTable();">Analytics</span>
+                <span class="mainTab" onclick="openTab(event, 'analytics', 'main');openTab(event, 'analyticsSoftware', 'sub');">Analytics</span>
             </div>
             <div id="home" class="tabContent">
                 <h3>Home</h3>
@@ -541,90 +622,18 @@ openTab(event, 'viewProblem', 'sub');
                     Software Analytics
                     <div class='canvasHolder' style='width:80%'>
                         <canvas id="softwareChart" width="400px", height="150px"></canvas>
-                        <script>
-                            var ctx = document.getElementById("softwareChart").getContext('2d');
-                            var chart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: software,
-                                    datasets: [{
-                                        label: "Software Time to Solve (seconds)",
-                                        backgroundColor: 'rgb(0,0,0)',
-                                        borderCoolor: 'rgb(0,0,0)',
-                                        data: information,
-                                    }]
-                                },
-                                options: {
-                                    scales:{
-                                        yAxes:[{
-                                            ticks:{
-                                                suggestedMin: 0,
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
                     </div>
                 </div>
                 <div id="analyticsHardware" class="subTabContent">
                     Hardware Analytics
                     <div class='canvasHolder' style='width:80%'>
                         <canvas id="hardwareChart" width="400px", height="150px"></canvas>
-                        <script>
-                            var ctx2 = document.getElementById("hardwareChart").getContext('2d');
-                            var chart2 = new Chart(ctx2, {
-                                type: 'bar',
-                                data: {
-                                    labels: hardware,
-                                    datasets: [{
-                                        label: "Hardware Time to Solve (seconds)",
-                                        backgroundColor: 'rgb(0,0,0)',
-                                        borderCoolor: 'rgb(0,0,0)',
-                                        data: informationH,
-                                    }]
-                                },
-                                options: {
-                                    scales:{
-                                        yAxes:[{
-                                            ticks:{
-                                                suggestedMin: 0,
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
                     </div>
                 </div>
                 <div id="analyticsSpecialists" class="subTabContent">
                     Specialists Analytics
                     <div class='canvasHolder' style='width:80%'>
                         <canvas id="specialistsChart" width="400px", height="150px"></canvas>
-                        <script>
-                            var ctx3 = document.getElementById("specialistsChart").getContext('2d');
-                            var chart3 = new Chart(ctx3, {
-                                type: 'bar',
-                                data: {
-                                    labels: specialists,
-                                    datasets: [{
-                                        label: "Problems solved per specialist",
-                                        backgroundColor: 'rgb(0,0,0)',
-                                        borderCoolor: 'rgb(0,0,0)',
-                                        data: problemSolved,
-                                    }]
-                                },
-                                options: {
-                                    scales:{
-                                        yAxes:[{
-                                            ticks:{
-                                                suggestedMin: 0,
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
