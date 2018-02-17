@@ -14,6 +14,12 @@ $rows = [];
 while ($row = $result->fetch_assoc()) {
     $rows[] = $row;
 }
+
+$sql2="SELECT Personnel.Name, COUNT(ProblemInfo.SolvedByID) FROM `ProblemInfo` JOIN Specialists ON Specialists.SpecialistID = ProblemInfo.SpecialistID JOIN Personnel ON Personnel.PersonnelID = Specialists.SpecialistID WHERE ProblemInfo.SpecialistID !=ProblemInfo.SolvedByID GROUP BY Personnel.Name";
+$result = $conn->query($sql2);
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
 echo json_encode($rows);
 $conn->close();
 ?>
