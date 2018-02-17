@@ -513,7 +513,7 @@
                     <span class="subTab" onclick="openTab(event, 'analyticsSpecialists', 'sub');useSpecTable();">Specialists Analytics</span>
                 </div>
                 <h3>Analytics</h3>
-                <div id="software" class="subTabContent">
+                <div id="analyticsSoftware" class="subTabContent">
                     Software Analytics
                      <canvas id="softwareChart" width="400px", height="150px"></canvas>
                         <script>
@@ -541,7 +541,7 @@
                                                 });
                     </script>
                 </div>
-                <div id="hardware" class="subTabContent">
+                <div id="analyticsHardware" class="subTabContent">
                     Hardware Analytics
                     <canvas id="hardwareChart" width="400px", height="150px"></canvas>
                         <script>
@@ -569,7 +569,7 @@
                                                 });
                     </script>
                 </div>
-                <div id="specialists" class="subTabContent">
+                <div id="analyticsSpecialists" class="subTabContent">
                     Specialists Analytics
                     <canvas id="specialistsChart" width="400px", height="150px"></canvas>
                                    <script>
