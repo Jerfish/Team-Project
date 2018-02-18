@@ -282,9 +282,15 @@ session_destroy();
                 document.getElementById(tabName).style.display = "inline";
                 event.currentTarget.className += " active";
             }
-
-            function viewProblem(x){
+			
+			//Switches to the subTab to view the extra details of a problem
+            function viewProblem(ProbID){
                 openTab(event, 'viewProblem', 'sub');
+				$(document).ready(function() {
+                    $.get("getProblem.php", {"ProbID": ProbID}, function(data) {
+                        document.getElementById(type+"Div").innerHTML = data;
+                    })
+                }(jQuery))
             }
 
             //redirects the user to the login page when the logout option is selected in the user/profile drop down menu
