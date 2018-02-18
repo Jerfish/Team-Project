@@ -1,10 +1,8 @@
 <?php
 $type = $_REQUEST['type'];
-
 $servername = "localhost";
 include "team11-mysql-connect.php"; //to provide $username,$password
 $dbname = "team11project";
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -14,31 +12,23 @@ if ($conn->connect_error) {
 if($type == "problem"){
     $sql = "SELECT * FROM ProblemInfo";
 }else if($type == "specialist"){
-    $sql = "SELECT Specialists.SpecialistID, Specialists.Specialism, Personnel.Name, Personnel.TelNo, COUNT( e.ProblemID ) AS  'Current Problems', COUNT( f.ProblemID ) AS  'Completed Problems', Specialists.PersonnelID
+    $sql = $sql = "SELECT Specialists.SpecialistID, Specialists.Specialism, Personnel.Name, Personnel.TelNo, COUNT( e.ProblemID ) AS  'Current Problems', Specialists.PersonnelID
 FROM Specialists
 INNER JOIN Personnel ON Specialists.PersonnelID = Personnel.PersonnelID
 INNER JOIN ProblemInfo e ON e.SpecialistID = Specialists.SpecialistID
-INNER JOIN ProblemInfo f ON f.SpecialistID = Specialists.SpecialistID
-WHERE e.ProblemID = any(
-
-SELECT ProblemID
-FROM ProblemInfo
 WHERE STATUS =  'Pending'
-)
-AND f.ProblemID = any(
+GROUP BY Specialists.SpecialistID";
 
-SELECT ProblemID
-FROM ProblemInfo
-WHERE (
+    $sql2 = "SELECT COUNT( f.ProblemID ) AS  'Completed Problems'
+FROM ProblemInfo f
+WHERE
 CallDateTime
 BETWEEN SUBDATE( NOW( ) , INTERVAL 1 
 MONTH ) 
 AND NOW( )
-)
 AND 
 STATUS =  'Solved'
-)
-GROUP BY Specialists.SpecialistID";
+GROUP BY SpecialistID";
 }else if($type == "hardware"){
     $sql = "SELECT * FROM Hardware WHERE HardwareID >=1";
 }else if($type == "software"){
@@ -47,12 +37,19 @@ GROUP BY Specialists.SpecialistID";
     echo "this will work later";
 }
 $result = $conn->query($sql);
+$rows2 = [];
+if($type == 'specialist'){
+    $res2 = $conn->query($sql2);
+    $i = 0;
+    while($row = $res2->fetch_assoc()) {
+        $rows2[$i] = $row["Completed Problems"];
+        $i++;
+    }
+}
 
 if ($result->num_rows > 0) {
     // output data of each row
-
     $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable(\''.$type.'\')" placeholder="Search..." style="width: 20%;">';
-
     if($type == "problem"){
         $str .= "<table id='problemTable'><thead><tr>";
         $str .= "<th onclick='sortTable(0, \"problemTable\")'>Problem ID</th>";
@@ -67,7 +64,6 @@ if ($result->num_rows > 0) {
         $str .= "</tr></thead><tbody>";
         while($row = $result->fetch_assoc()) {
             $str .= "<tr onclick='viewProblem(".$row["ProblemID"].")'><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
-
             if($row["HardwareID"] != 0){
                 $str .= "Hardware";
             }else if($row["SoftwareID"] != 0){
@@ -75,7 +71,6 @@ if ($result->num_rows > 0) {
             }else{
                 $str .= "Error";
             }
-
             $str .= "</td><td>".$row["ProblemType"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["DateTime Solved"]."</td><td>".$row["Status"]."</td></tr>";
         }
         $str .= '</tbody></table>';
@@ -90,9 +85,11 @@ if ($result->num_rows > 0) {
         $str .= "<th onclick='sortTable(5, \"specialistTable\")'>No. Completed Problems </br> (over last month)</th>";
         $str .= "<th onclick='sortTable(6, \"specialistTable\")'>Personnel ID</th>";
         $str .= "</tr></thead><tbody>";
+        $j = 0;
         while($row = $result->fetch_assoc()) {
             $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>";
-            $str .= $row["Completed Problems"]."</td><td>".$row["PersonnelID"]."</td></tr>";
+            $str .= $rows2[$j]."</td><td>".$row["PersonnelID"]."</td></tr>";
+            $j++;
         }
         $str .= '</tbody></table>';
         echo $str;
@@ -102,10 +99,9 @@ if ($result->num_rows > 0) {
         $str .= "<th onclick='sortTable(1, \"hardwareTable\")'>Hardware Type</th>";
         $str .= "<th onclick='sortTable(2, \"hardwareTable\")'>Hardware Make</th>";
         $str .= "<th onclick='sortTable(3, \"hardwareTable\")'>Serial No.</th>";
-        $str .= "<th onclick='sortTable(4, \"hardwareTable\")'>Personnel ID</th>";
         $str .= "</tr></thead><tbody>";
         while($row = $result->fetch_assoc()) {
-            $str .= "<tr><td>".$row["HardwareID"]."</td><td>".$row["HardwareType"]."</td><td>".$row["Make"]."</td><td>".$row["SerialNo"]."</td><td>"."</td><td>".$row["PersonnelID"]."</td></tr>";
+            $str .= "<tr><td>".$row["HardwareID"]."</td><td>".$row["HardwareType"]."</td><td>".$row["Make"]."</td><td>".$row["SerialNo"]."</td><td>"."</td></tr>";
         }
         $str .= '</tbody></table>';
         echo $str;
@@ -126,15 +122,4 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 $conn->close();
-
 ?>
-
-
-
-
-
-
-
-
-
-
