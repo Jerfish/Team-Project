@@ -8,7 +8,7 @@
 	<title>
 		Welcome
 	</title>
-	<style type="text/css">
+	<style>
 		body {
 		background-color: MidnightBlue;
 		width: 100%;
@@ -159,9 +159,9 @@
 			
 			<!-- contains the 'logo' of the company name and logo on either side -->
 			<div id="logoHolder">
-				<img src="logo.png" id="logoLeft">		
+				<img src="logo.png" id="logoLeft" alt="Logo left">		
 				<label for="logo" id="logoLabel">Make-It-All</label>
-				<img src="logo.png" id="logoRight">
+				<img src="logo.png" id="logoRight" alt="Logo right">
 			</div>
 			
 			<!-- contains the login box forms and associated labels -->
