@@ -540,26 +540,26 @@ session_destroy();
 
                         <div class="form-group">
                             <label for="caller">Caller Name*</label>
-                            <input type="text" class="form-control" id="caller" placeholder="Joe Bloggs" required><br>
+                            <input type="text" class="form-control" name="caller" placeholder="Joe Bloggs" required><br>
                             <label for="operator">Helpdesk Operator Name*</label>
-                            <input type="text" class="form-control" id="operator" placeholder="Alice Smith" required><br>
+                            <input type="text" class="form-control" name="operator" placeholder="Alice Smith" required><br>
                             <label for="time">Call Time/Date*</label>
-                            <input type="text" class="form-control" id="time" placeholder="06/11/2017 18:50" required><br>
+                            <input type="text" class="form-control" name="time" placeholder="06/11/2017 18:50" required><br>
                             <label for="reason">Reason for Call*</label>
-                            <input type="text" class="form-control" id="reason" placeholder="Software keeps crashing" required><br>
+                            <input type="text" class="form-control" name="reason" placeholder="Software keeps crashing" required><br>
                             <label for="hardwaresoftware">Hardware/Software*</label>
-                            <select class="form-control" id="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()" required>
+                            <select class="form-control" name="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()" onload="hideOption()" required>
                                 <option>Hardware</option>
                                 <option>Software</option>
                             </select><br>
-                            <label for="hardwareID" id="hardwareLabel">Hardware Affected</label>
-                            <input type="text" class="form-control" id="hardwareID" placeholder="Kodak Printer"><br>
-                            <label for="softwareId" id="softwareLabel">Software Affected</label>
-                            <input type="text" class="form-control" id="softwareId" placeholder="Photoshop"><br>
+                            <label for="hardwareID" id="hardwareLabel">Hardware ID</label>
+                            <input type="text" class="form-control" name="hardwareID" placeholder="Kodak Printer"><br>
+                            <label for="softwareId" id="softwareLabel">Software ID</label>
+                            <input type="text" class="form-control" name="softwareId" placeholder="Photoshop"><br>
                             <label for="os">Operating System</label>
-                            <input type="text" class="form-control" id="os" placeholder="Windows/Mac OS/Linux"><br>
+                            <input type="text" class="form-control" name="os" placeholder="Windows/Mac OS/Linux"><br>
                             <label for="type">Problem Type</label>
-                            <input type="text" class="form-control" id="type" placeholder="Please select most appropriate"><br>
+                            <input type="text" class="form-control" name="type" placeholder="Please select most appropriate"><br>
                             <div class="spacer"></div>
                             <!--<input type="submit" id="firstPageSubmit" class="divButtons" />-->
                         </div>
@@ -568,15 +568,15 @@ session_destroy();
                     <div id="additionalInfo" class="subTabContent">
                         <div class="form-group">
                             <label for="callerID">Caller ID</label>
-                            <input type="text" class="form-control" id="callerID" placeholder="Joe Bloggs" ><br>
-                            <label for="operatorID">Helpdesk Operator Name*</label>
-                            <input type="text" class="form-control" id="operatorID" placeholder="Alice Smith"><br>
+                            <input type="text" class="form-control" name="callerID" placeholder="Joe Bloggs" ><br>
+                            <label for="operatorID">Helpdesk Operator ID</label>
+                            <input type="text" class="form-control" name="operatorID" placeholder="Alice Smith"><br>
                             <label for="hardware" id="hardwareIDLabel">Affected Hardware</label>
-                            <input type="text" class="form-control" id="hardware" placeholder="C-40392-B"><br>
+                            <input type="text" class="form-control" name="hardware" placeholder="C-40392-B"><br>
                             <label for="software" id="softwareIdLabel">Affected Software</label>
-                            <input type="text" class="form-control" id="software" placeholder="S1039"><br>
+                            <input type="text" class="form-control" name="software" placeholder="S1039"><br>
                             <label for="specialistId" id="specialistIdLabel">Assigned Specialist ID</label>
-                            <input type="text" class="form-control" id="specialistId" placeholder="S10987"><br>
+                            <input type="text" class="form-control" name="specialistId" placeholder="S10987"><br>
                             <div class="spacer"></div>
                         </div>
                         <input type='button' value='Next' onclick="openTab(event, 'descriptionLog', 'sub');">
@@ -584,7 +584,7 @@ session_destroy();
                     <div id="descriptionLog" class="subTabContent">
                         <div class="form-group">
                             <label for="problemDesc" id="problemDescLabel">Problem Description</label>
-                            <textarea rows="5" cols="70" class="form-control" id="problemDesc" placeholder="Please enter a description of the problem"></textarea>
+                            <textarea rows="5" cols="70" class="form-control" name="problemDesc" placeholder="Please enter a description of the problem"></textarea>
                             <div class="spacer"></div>
                         </div>
                         <input type='submit' value='Submit' onclick="alert('do the database stuff');">
