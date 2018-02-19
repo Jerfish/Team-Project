@@ -1,4 +1,9 @@
 <?php
+/*
+This file is passed variable 'type' which identifies which table it returns. Given the 'type',
+it queries the database and formats the results into a html table (enclosed in a string). This string is then sent back.
+This file was written by Peter Smith.
+*/
 $type = $_REQUEST['type'];
 $servername = "localhost";
 include "team11-mysql-connect.php"; //to provide $username,$password
@@ -12,13 +17,14 @@ if ($conn->connect_error) {
 if($type == "problem"){
     $sql = "SELECT * FROM ProblemInfo";
 }else if($type == "specialist"){
+    //for type=specialist, I query the database twice, in order to get some extra information.
     $sql = $sql = "SELECT Specialists.SpecialistID, Specialists.Specialism, Personnel.Name, Personnel.TelNo, COUNT( e.ProblemID ) AS  'Current Problems', Specialists.PersonnelID
 FROM Specialists
 INNER JOIN Personnel ON Specialists.PersonnelID = Personnel.PersonnelID
 INNER JOIN ProblemInfo e ON e.SpecialistID = Specialists.SpecialistID
 WHERE STATUS =  'Pending'
 GROUP BY Specialists.SpecialistID";
-
+//the second query gets the number of completed problems within the last month, per specialist.
     $sql2 = "SELECT COUNT( f.ProblemID ) AS  'Completed Problems'
 FROM ProblemInfo f
 WHERE
@@ -36,11 +42,14 @@ GROUP BY SpecialistID";
 }else{
     echo "this will work later";
 }
+//this stores the result from the query in $result
 $result = $conn->query($sql);
+//For type=specialist, we send the second query and store the result in $res2
 $rows2 = [];
 if($type == 'specialist'){
     $res2 = $conn->query($sql2);
     $i = 0;
+    //We then go throgh $res2 and store the result in the array $rows2
     while($row = $res2->fetch_assoc()) {
         $rows2[$i] = $row["Completed Problems"];
         $i++;
@@ -48,8 +57,9 @@ if($type == 'specialist'){
 }
 
 if ($result->num_rows > 0) {
-    // output data of each row
-    $str = '<input type="text" id="'.$type.'Search" onkeyup="filterTable(\''.$type.'\')" placeholder="Search..." style="width: 20%;">';
+    //We start the string with a text box that, when changed, will trigger filterTable();
+    $str = '<input type="text" id="'.$type.'Search" style="width: 100%; overflow-x: hidden; padding: 0.5%; font-size: 105%;" onkeyup="filterTable(\''.$type.'\')" placeholder="Search..." style="width: 20%;">';
+    //The string is then added to with each header - which, when clicked, trigger a specific sortTable() function.
     if($type == "problem"){
         $str .= "<table id='problemTable'><thead><tr>";
         $str .= "<th onclick='sortTable(0, \"problemTable\")'>Problem ID</th>";
@@ -62,8 +72,10 @@ if ($result->num_rows > 0) {
         $str .= "<th onclick='sortTable(7, \"problemTable\")'>Date/Time Solved</th>";
         $str .= "<th onclick='sortTable(8, \"problemTable\")'>Status</th>";
         $str .= "</tr></thead><tbody>";
+        //We then loop through the results of our query and write a row for each. The <tr> tag has an onclick attribute which will take it to viewProblem(), allowing the use to see more detail about the problem.
         while($row = $result->fetch_assoc()) {
             $str .= "<tr onclick='viewProblem(".$row["ProblemID"].")'><td>".$row["ProblemID"]."</td><td>".$row["CallDateTime"]."</td><td>".$row["CallerID"]."</td><td>".$row["OperatorID"]."</td><td>";
+            //As our database doesn't have a hardware/software value, and yet our table will (to simplify the information), this if statement will find out if the problem is Hardware or Software. If either HardwareID or SoftwareID is 0 in the db, it is the other.
             if($row["HardwareID"] != 0){
                 $str .= "Hardware";
             }else if($row["SoftwareID"] != 0){
@@ -71,11 +83,12 @@ if ($result->num_rows > 0) {
             }else{
                 $str .= "Error";
             }
-            $str .= "</td><td>".$row["ProblemType"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["DateTime Solved"]."</td><td>".$row["Status"]."</td></tr>";
+            $str .= "</td><td>".$row["ProblemType"]."</td><td>".$row["SpecialistID"]."</td><td>".$row["DateTimeSolved"]."</td><td>".$row["Status"]."</td></tr>";
         }
         $str .= '</tbody></table>';
         echo $str;
     } else if($type == "specialist"){
+        //As above, we have a text box with filterTable and sortTable in the headers.
         $str .= "<table id='specialistTable'><thead><tr>";
         $str .= "<th onclick='sortTable(0, \"specialistTable\")'>Specialist ID</th>";
         $str .= "<th onclick='sortTable(1, \"specialistTable\")'>Name</th>";
@@ -87,6 +100,7 @@ if ($result->num_rows > 0) {
         $str .= "</tr></thead><tbody>";
         $j = 0;
         while($row = $result->fetch_assoc()) {
+            //This goes through the results and prints the row, and it accesses the second query by running the variable $j around as an index.
             $str .= "<tr><td>".$row["SpecialistID"]."</td><td>".$row["Name"]."</td><td>".$row["Specialism"]."</td><td>".$row["TelNo"]."</td><td>"."</td><td>".$row["Current Problems"]."</td><td>";
             $str .= $rows2[$j]."</td><td>".$row["PersonnelID"]."</td></tr>";
             $j++;
