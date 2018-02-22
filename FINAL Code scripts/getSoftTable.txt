@@ -1,0 +1,32 @@
+<?php
+/*
+This file is called to give data to the software graph. 
+It queries the database and encodes the results in JSON. This is then sent back and parsed.
+This file was written by Will Thorpe.
+*/
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+//Get ID,name,dates from database where the product is software and it has been solved
+$sql = "SELECT Software.SoftwareID, Software.SoftwareName, ProblemInfo.CallDateTime, ProblemInfo.DateTimeSolved FROM Software JOIN ProblemInfo ON Software.SoftwareID = ProblemInfo.SoftwareID WHERE ProblemInfo.DateTimeSolved != \"0000-00-00 00:00:00\" AND Software.SoftwareID >0 AND ProblemInfo.CallDateTime BETWEEN SUBDATE( NOW(),INTERVAL 1 MONTH) AND NOW()  ORDER BY Software.SoftwareID";
+
+$result = $conn->query($sql);
+
+$rows = []; //stores output from query
+
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+
+//encode as json when it gets passed to index.php
+echo json_encode($rows);
+
+$conn->close();
+?>

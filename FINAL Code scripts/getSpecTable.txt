@@ -1,0 +1,33 @@
+<?php
+/*
+This file is called to give data to the specialists graph. 
+It queries the database and encodes the results in JSON. This is then sent back and parsed.
+This file was written by Will Thorpe.
+*/
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+//Queries the database for  name, number of problems where the problem has been solved (status = solved)
+$sql = "SELECT Personnel.Name, COUNT(ProblemInfo.SolvedByID) as SolvedCount FROM Personnel JOIN Specialists ON  Personnel.PersonnelID = Specialists.PersonnelID JOIN ProblemInfo ON Specialists.SpecialistID = ProblemInfo.SolvedByID WHERE ProblemInfo.SolvedByID > 0 AND ProblemInfo.CallDateTime BETWEEN SUBDATE( NOW(),INTERVAL 1 MONTH) AND NOW() GROUP BY Personnel.Name";
+$result = $conn->query($sql);
+$rows = []; //Stores the results from both queries
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+//Queries the database for name, number of problems where the problem has not been solved
+$sql2="SELECT Personnel.Name, COUNT(ProblemInfo.SolvedByID) as UnsolvedCount FROM `ProblemInfo` JOIN Specialists ON Specialists.SpecialistID = ProblemInfo.SpecialistID JOIN Personnel ON Personnel.PersonnelID = Specialists.SpecialistID WHERE ProblemInfo.SpecialistID !=ProblemInfo.SolvedByID AND ProblemInfo.CallDateTime BETWEEN SUBDATE( NOW(),INTERVAL 1 MONTH) AND NOW() GROUP BY Personnel.Name";
+$result = $conn->query($sql2);
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+//encodes both queries 1 and then 2
+echo json_encode($rows);
+$conn->close();
+?>

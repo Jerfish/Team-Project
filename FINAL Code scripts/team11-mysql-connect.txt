@@ -1,0 +1,6 @@
+<?php
+//team11-mysql-connect.php holds the database username and password meaning it can be included anywhere these values are needed without explicitly being written in the document allowing for enhanced security. Implemented by Peter Smith
+
+$username='root';
+$password='vV7?m3Q4';
+?>

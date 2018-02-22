@@ -1,0 +1,27 @@
+<?php
+/*
+This file is called to give data to the homepage graph. 
+It queries the database and encodes the results in JSON. This is then sent back and parsed.
+This file was written by Will Thorpe.
+*/
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+//Counts number of problems with each different type of status
+$sql = "SELECT COUNT(SpecialistID) as Count FROM ProblemInfo WHERE ProblemInfo.CallDateTime BETWEEN SUBDATE( NOW(),INTERVAL 1 MONTH) AND NOW() GROUP BY Status";
+$result = $conn->query($sql);
+$rows = []; //stores the result of the queries
+
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+//outputs as JSON encoding for use in index.php
+echo json_encode($rows);
+$conn->close();
+?>

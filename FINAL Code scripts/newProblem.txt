@@ -1,0 +1,98 @@
+<?php
+//This file takes information from the new Problem form and writes it into the database. This file was written by Peter Smith.
+
+
+//starts the session, so we're not logged out when we go back to index.php
+session_start();
+
+//This gets all the information from the form.
+$callerName = $_POST['caller'];
+$callerID = $_POST['callerID'];
+
+$operatorName = $_POST['operator'];
+$operatorID = $_POST['operatorID'];
+
+$callDateTime = $_POST['time'];
+
+$details = $_POST['reason'];
+
+$problemType = $_POST['type'];
+
+$problemDesc = $_POST['problemDesc'];
+
+$hardID = $_POST['hardwareID'];
+
+$softID = $_POST['softwareId'];
+
+$operatingSystem = $_POST['os'];
+
+$specialistId = $_POST['specialistId'];
+
+$usernameValue = $_POST['currentUserNewProb'];
+
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+//This provides some validation, to make sure we have all the information that can be written into the db.
+if($callerID == ''){
+    $sql = 'SELECT PersonnellID FROM Personnel WHERE Name = \''.$callerName.'\';';
+    $result = $conn->query($sql);
+    $callerID = $result->fetch_assoc();
+}
+if($operatorID == ''){
+    $sql = 'SELECT PersonnelID FROM Personnel WHERE Name = \''.$operatorName.'\';';
+    $result = $conn->query($sql);
+$operatorID = mysql_fetch_field($result);
+}
+$status = 'Unassigned';
+if($specialistId != null){
+$status = 'Pending';
+}else{
+$specialistId = 'null';
+}
+if(!$hardID > 0){
+    $hardID = 0;
+}
+if(!$softID > 0){
+    $softID = 0;
+}
+
+
+//This declares the sql string, and sends the query.
+    $sql = "INSERT INTO  `team11project`.`ProblemInfo` (
+`ProblemID` ,
+`OperatorID` ,
+`CallerID` ,
+`CallDateTime` ,
+`Details` ,
+`ProblemType` ,
+`Description/Log` ,
+`HardwareID` ,
+`SoftwareID` ,
+`OperatingSystem` ,
+`SpecialistID` ,
+`DateTimeSolved` ,
+`SolvedByID` ,
+`Status`
+)
+VALUES (
+NULL ,  ".$operatorID.",  ".$callerID.",  '".$callDateTime."',  '".$details."',  '".$problemType."',  '".$problemDesc."',  ".$hardID.",  ".$softID.",  '".$operatingSystem."',  ".$specialistId.",  '',  '',  '".$status."'
+)";
+$result = $conn->query($sql);
+
+$conn->close();
+//this authenticates the session, then sends it back to index.php.
+$_SESSION['authenticated'] = true;
+$_SESSION['user'] = $usernameValue;
+header('location: index.php');
+
+?>
+

@@ -1,0 +1,132 @@
+<?php
+
+//This code will take the user's changes to a problem and update the database with them
+//Coded by Luke Whitehead and Peter Smith
+
+session_start();
+
+//var_dump($_POST);
+
+$ProblemID = $_POST['ProbID'];
+
+$callerID = $_POST['callerID'];
+
+$operatorID = $_POST['operatorID'];
+
+$callDateTime = $_POST['time'];
+
+$details = $_POST['reason'];
+
+$problemType = $_POST['type'];
+
+$problemDesc = $_POST['problemDesc'];
+
+/*if (isset($_POST["hardwareID"]))
+{
+  $hardID = $_POST["hardwareID"];
+  echo $hardID;
+} 
+else 
+{
+  $hardID = null;
+  echo "No hardware";
+}*/
+
+$hardID = ($_POST['hardwareID']);
+
+$softID = $_POST['softwareID'];
+
+$operatingSystem = $_POST['os'];
+
+$SpecialistID = $_POST['SpecialistID'];
+
+$Status = $_POST['status'];
+
+$DateTimeSolved = $_POST['solutiondatetime'];
+
+$SolvedBy = $_POST['solvedBy'];
+
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+/*$sql = "SELECT SolvedByID FROM ProblemInfo JOIN Personnel ON ProblemInfo.SolvedByID = Personnel.PersonnelID WHERE Name = '".$SolvedBy."';";
+   
+$result2 = $conn->query($sql);
+
+$SolverInfo = $result2->fetch_assoc();*/
+
+
+/*if($callerID == ''){
+    $sql = 'SELECT PersonnellID FROM Personnel WHERE Name = \''.$callerName.'\';';
+    $result = $conn->query($sql);
+    $callerID = $result->fetch_assoc();
+}
+if($operatorID == ''){
+    $sql = 'SELECT PersonnelID FROM Personnel WHERE Name = \''.$operatorName.'\';';
+    $result = $conn->query($sql);
+$operatorID = mysql_fetch_field($result);
+};*/
+
+if(!$hardID > 0){
+    $hardID = 0;
+	$operatingSystem = null;
+}
+if(!$softID > 0){
+    $softID = 0;
+}
+
+$sql = "UPDATE `ProblemInfo`
+SET OperatorID = ".$operatorID;
+
+$sql .= ", CallerID = ".$callerID.", CallDateTime = '".$callDateTime."',`Description/Log` = '".$problemDesc."'";
+
+if($hardID > 0){
+	$sql .=", HardwareID = ".$hardID."";
+}else{
+	$sql .=", SoftwareID = ".$softID."";
+};
+
+$sql .=", Details = '".$details."',
+SolvedByID = ".$SolvedBy.",
+Status = '".$Status."',
+OperatingSystem = '".$operatingSystem."',
+DateTimeSolved = '".$DateTimeSolved."'";
+
+$sql .=" WHERE ProblemID = ".$ProblemID.";";
+
+//ProblemType = '".$problemType."'
+//SpecialistID = ".$SpecialistID.",
+
+
+/*$sql = "UPDATE ProblemInfo
+SET OperatorID = '".$operatorID."',
+CallerID = '".$callerID."',
+CallDateTime = '".$callDateTime."',
+Details = '".$details."',
+`Description/Log` = '".$problemDesc."',
+ProblemType = '".$problemType."',
+HardwareID = '".$hardID."',
+SoftwareID = '".$softID."',
+OperatingSystem = '".$operatingSystem."',
+SpecialistID = '".$specialistID."',
+DateTimeSolved = '".$DateTimeSolved."',
+SolvedByID = '".$SolverInfo['Name']."',
+Status = '".$Status."'
+WHERE ProblemID = ".$ProblemID.";";*/
+
+$result = $conn->query($sql);
+
+$conn->close();
+$_SESSION['authenticated'] = true;
+header('location: index.php');
+
+?>
+

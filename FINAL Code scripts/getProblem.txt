@@ -1,0 +1,157 @@
+<?php
+/*This php will pull the relevant information from the database for the problem that was clicked.
+It will then format it into html and display it to the user.
+Coded by Luke Whitehead and Peter Smith
+*/
+$ProbID = $_REQUEST['ProbID'];
+
+$servername = "localhost";
+include "team11-mysql-connect.php"; //to provide $username,$password
+$dbname = "team11project";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+
+
+$sql = "SELECT prob.ProblemID, prob.OperatorID, prob.CallerID, prob.CallDateTime, prob.Details, prob.ProblemType, prob.`Description/Log`, prob.HardwareID, prob.`SoftwareID`, prob.OperatingSystem, prob.SpecialistID, prob.DateTimeSolved, prob.SolvedByID, prob.Status   
+FROM ProblemInfo prob
+WHERE prob.ProblemID = ".$ProbID;
+
+$result = $conn->query($sql);
+
+$rows = $result->fetch_assoc();
+
+
+/*Query Debugging
+$sql = 'SELECT * FROM Software WHERE Software.SoftwareID ='.$rows["SoftwareID"];
+$result = $conn->query($sql);
+if (!$result) {
+    throw new Exception("Database Error [{$conn->errno}] {$conn->error}");
+}*/
+
+$HardSoftOption1 = "";
+$HardSoftOption2 = "";
+
+if($rows["HardwareID"] != 0){
+	$sql = "SELECT * FROM Hardware WHERE Hardware.HardwareID= ".$rows['HardwareID'];
+
+	$result = $conn->query($sql);
+
+	$hardsoft = $result->fetch_assoc();
+	
+	$HardSoftption1 = "selected";
+	
+}else{
+	$sql = "SELECT * FROM Software WHERE Software.SoftwareID = ".$rows['SoftwareID'];
+		
+	$result = $conn->query($sql);
+
+	$hardsoft = $result->fetch_assoc();
+	
+	$HardSoftOption2 = "selected";
+}
+	
+$sql = "SELECT * FROM Personnel WHERE PersonnelID = ".$rows['CallerID'];
+
+$resul = $conn->query($sql);
+
+$caller = $resul->fetch_assoc();
+
+$sql = "SELECT * FROM Personnel WHERE PersonnelID = ".$rows['OperatorID'];
+
+$result2 = $conn->query($sql);
+
+$OpInfo = $result2->fetch_assoc();
+
+$sql = "SELECT * FROM Personnel JOIN Specialists ON Personnel.PersonnelID = Specialists.PersonnelID WHERE Specialists.SpecialistID = ".$rows['SpecialistID'];
+
+$result = $conn->query($sql);
+
+$specInfo = $result->fetch_assoc();
+
+
+$SolvedOption1 = "";
+$SolvedOption2 = "";
+$SolvedOption3 = "";
+
+if($rows["Status"]=="Unassigned"){
+	$SolvedOption1 = "selected";
+}else if($rows["Status"]=="Pending"){
+	$SolvedOption2 = "selected";
+}else{
+	$SolvedOption3 = "selected";
+};
+
+
+
+$ProbOver = '<div class="col"><h4>Problem Overview</h4><label for="ProbID">ProblemID*</label><input type="text" class="form-control" name="ProbID" placeholder="0" value="'.$ProbID.'" readonly></br>';
+$ProbOver .='<label for="operatorID">Helpdesk Operator ID*</label><input type="text" class="form-control" name="operatorID" placeholder="0" value="'.$rows["OperatorID"].'" required><br>';
+$ProbOver .='Helpdesk Operator Name*: '.$OpInfo["Name"].'</br>';
+$ProbOver .= '<label for="hardwaresoftware">Hardware/Software*</label><select class="form-control" name="hardwaresoftware" placeholder="Hardware or Software problem" onchange="hideOption()" onload="hideOption()" required><option '.$HardSoftOption1.'>Hardware</option><option '.$HardSoftOption2.'>Software</option></select><br>';
+$ProbOver .= '<label for="type">Problem Type</label><input type="text" class="form-control" name="type" placeholder="" value="'.$rows["ProblemType"].'"></div>';
+
+$ProbDeets = '<div class="col"><h4>Problem Details</h4><label for="status">Status</label><select id="ProblemSolved" class="form-control" name="status" placeholder="Status of problem"><option '.$SolvedOption1.'>Unassigned</option><option '.$SolvedOption2.'>Pending</option><option '.$SolvedOption3.'>Solved</option></select><br>';
+$ProbDeets .= '<label for="time">Call Time/Date*</label><input type="text" class="form-control" name="time" placeholder="06/11/2017 18:50" value="'.$rows["CallDateTime"].'" required><br>';
+$ProbDeets .= '<label for="solutiondatetime">Solution Time/Date</label><input type="text" class="form-control" name="solutiondatetime" placeholder="06/11/2017 18:50" value="'.$rows["DateTimeSolved"].'"><br>';
+$ProbDeets .= '<label for="solvedBy">ID of Solver</label><input type="text" class="form-control" name="solvedBy" placeholder="0" value="'.$rows["SolvedByID"].'"></br>';
+$ProbDeets .= '<label for="reason">Reason for Call*</label><input type="text" class="form-control" name="reason" placeholder="Software keeps crashing" value="'.$rows["Details"].'" required><br>';
+$ProbDeets .= '<label for="problemDesc" id="problemDescLabel">Problem Description</label><textarea rows="5" cols="70" class="form-control" name="problemDesc" placeholder="Please enter a description of the problem">'.$rows["Description/Log"].'</textarea></div>';
+
+$callerText = '<h4>Caller Details</h4>';
+$callerText .= '<label for="callerID">Caller ID</label><input type="text" class="form-control" name="callerID" placeholder="0" value=" '.$caller['PersonnelID'].'" required></br>';
+$callerText .= 'Caller Name :'.$caller['Name'].'</br>';
+$callerText .= 'Caller Job: '.$caller['Job'].'</br>';
+$callerText .= 'Caller Department: '.$caller['Dept'].'</br>';
+$callerText .= 'Caller Telephone Number: '.$caller['TelNo'].'</br>';
+
+$specialistText = '<h4>Specialist Details</h4>';
+$specialistText .= '<label for="SpecialistID">Specialist ID</label><input type="text" class="form-control" name="SpecialistID" placeholder="0" value= "'.$rows['SpecialistID'].'"/></br>';
+$specialistText .= 'Specialist Name: '.$specInfo['Name'].'</br>';
+$specialistText .= 'Specialist TelNo: '.$specInfo['TelNo'].'</br>';
+
+$hardSoftText;
+
+if($rows['HardwareID'] != 0 || $rows['HardwareID'] == null){
+	$hardSoftText = '<h4>Hardware Details</h4>';
+	$hardSoftText .= '<label for="hardwareID">Affected Hardware ID*</label><input type="text" class="form-control" name="hardwareID" placeholder="0" value=" '.$hardsoft['HardwareID'].'" required></br>';
+	$hardSoftText .= 'Affected Hardware Type: '.$hardsoft['HardwareType'].'</br>';
+	$hardSoftText .= 'Affected Hardware Make: '.$hardsoft['Make'].'</br>';
+	$hardSoftText .= 'Hardware Serial: '.$hardsoft['SerialNo'].'</br>';
+}else{
+	$hardSoftText = '<h4>Software Details</h4>';
+	$hardSoftText .= '<label for="softwareID">Affected Software ID*</label><input type="text" class="form-control" name="softwareID" placeholder="0" value=" '.$hardsoft['SoftwareID'].'" required></br>';
+	$hardSoftText .= 'Affected Software: '.$hardsoft['SoftwareName'].'</br>';
+	$hardSoftText .= '<label for="os">Operating System</label><input type="text" class="form-control" name="os" placeholder="Windows" value=" '.$rows["OperatingSystem"].'"></br>';
+	$hardSoftText .= 'Licenced: '.$hardsoft['SoftwareLicenced'].'</br>';
+	$hardSoftText .= 'Supported: '.$hardsoft['SoftwareSupported'].'</br>';
+}
+
+
+				
+//$str = '<div><div>'.$callerText.'</div><div>'.$specialistText.'</div><div>'.$hardSoftText.</div></div>
+
+$str = '<button onclick="editProblem()" style="float: right;">Edit</button><form id = "editProblemForm" method="post" action="editProblem.php"><fieldset disabled><input type = "submit" class = "next-button" style="float: right; width: auto "><div class="row">'.$ProbOver.'</div>'.$callerText.''.$specialistText.''.$hardSoftText.'<div class="row">'.$ProbDeets.'</div></fieldset></form></div><script>document.getElementById("ProblemSolved").selectedIndex = 2;</script>';
+
+
+
+echo $str;
+
+
+$conn->close();
+
+?>
+
+
+
+
+
+
+
+
+
+
